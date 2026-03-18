@@ -1,11 +1,12 @@
 from PIL import Image
 import numpy as np
 
-img = Image.open("/Users/lelaurearnaud/Documents/cours_S4/MaCs/projet/18:03:26/Image/imageDepart/0/0t.png")
-x = []
-y = []
 
-def regression(img) -> float:
+def regression(img) -> tuple[float,list]:
+
+    x = []
+    y = []
+
     for i in range(128):
         for j in range(128):
             r,v,b,o=img.getpixel((i,j))
@@ -20,12 +21,27 @@ def regression(img) -> float:
 
     pente = np.sum((xa - x_moy) * (ya - y_moy)) / np.sum((xa - x_moy) ** 2)
 
-    return pente
+    return (pente,np.array([x,y]))
+
+
+def rotateImage(imgMatrix, slope) -> None :
+    # imageArray = 
+    img = Image.fromarray((imgMatrix * 255).astype(np.uint8))
+    img.rotate(slope)
+
+    img.show
 
 
 def main():
-    pente = regression(img)
+    img = Image.open("MacsOCR/18:03:26/Image/imageDepart/7/7a.png")
+
+    pente, matrix = regression(img)
     print(f"pente : {pente}")
+
+
+
+    rotateImage(matrix,pente)
+
 
 
 if __name__ == "__main__":
