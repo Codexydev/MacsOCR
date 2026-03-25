@@ -62,20 +62,32 @@ def rotateImage(imgMatrix, slope) -> Image :
 
     return imgRotated
 
+
 def cropping(image):
-    Ymin = []
+    Xmin = 128
+    Xmax = 0
+    Ymin = 128
+    Ymax = 0
 
     for y in range(image.size[1]):
         for x in range(image.size[0]):
-            if image.getpixel((x,y)) == (0,0,0):
-                Ymin.append(y-1)
+            if image.getpixel((x, y)) == (0, 0, 0):
+                if x < Xmin:
+                    Xmin = x
+                if x > Xmax:
+                    Xmax = x
+                if y < Ymin:
+                    Ymin = y
+                if y > Ymax:
+                    Ymax = y
 
-    return (Ymin)
+    return image.crop((Xmin, Ymin, Xmax+1, Ymax+1))
 
-def showImage(matrix, rotatedImage, pente, p) -> None:
+
+def showImage(matrix, rotatedImage,imageCropped, pente, p) -> None:
     figure = plt.figure()
 
-    im1 = figure.add_subplot(1, 2, 1)
+    im1 = figure.add_subplot(1, 3, 1)
     im1.imshow(matrix, interpolation='nearest')
 
     hauteur = len(matrix)
@@ -85,15 +97,19 @@ def showImage(matrix, rotatedImage, pente, p) -> None:
     im1.plot(x_vals, y_vals, '-r')
     im1.set_title("Image d'origine + Régression")
 
-    im2 = figure.add_subplot(1, 2, 2)
+    im2 = figure.add_subplot(1, 3, 2)
     im2.imshow(rotatedImage, interpolation='nearest')
     im2.set_title("Image redressée")
+
+    im3 = figure.add_subplot(1, 3, 3)
+    im3.imshow(imageCropped, interpolation='nearest')
+    im3.set_title("Image cropped")
 
     plt.show()
 
 
 def main() -> None:
-    number = 2
+    number = 3
     font = "t"
     imagePath = f"MacsOCR/25:03:26/Image/imageDepart/{number}/{number}{font}.png"
     binaryImage = binariasation(imagePath)
@@ -105,9 +121,9 @@ def main() -> None:
     print("Angle : ",angle_deg)
 
     rotatedImage = rotateImage(binaryImage, -angle_deg)
+    croppedImage = cropping(rotatedImage)
 
-    print(cropping(rotatedImage))
-    showImage(binaryImage, rotatedImage, pente, p)
+    showImage(binaryImage, rotatedImage, croppedImage, pente, p)
 
 
 if __name__ == "__main__" :
