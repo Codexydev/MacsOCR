@@ -55,13 +55,22 @@ def regression(img):
 
     return pente, p
 
-def rotateImage(imgMatrix, slope) -> None :
+def rotateImage(imgMatrix, slope) -> Image :
     img = np.asarray(imgMatrix, dtype=np.uint8)
     img = Image.fromarray(img)
     imgRotated = img.rotate(slope, fillcolor=(255,255,255))
 
     return imgRotated
 
+def cropping(image):
+    Ymin = []
+
+    for y in range(image.size[1]):
+        for x in range(image.size[0]):
+            if image.getpixel((x,y)) == (0,0,0):
+                Ymin.append(y-1)
+
+    return (Ymin)
 
 def showImage(matrix, rotatedImage, pente, p) -> None:
     figure = plt.figure()
@@ -97,6 +106,7 @@ def main() -> None:
 
     rotatedImage = rotateImage(binaryImage, -angle_deg)
 
+    print(cropping(rotatedImage))
     showImage(binaryImage, rotatedImage, pente, p)
 
 
