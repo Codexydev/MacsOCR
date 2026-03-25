@@ -58,7 +58,7 @@ def regression(img):
 def rotateImage(imgMatrix, slope) -> None :
     img = np.asarray(imgMatrix, dtype=np.uint8)
     img = Image.fromarray(img)
-    imgRotated = img.rotate(slope)
+    imgRotated = img.rotate(slope, fillcolor=(255,255,255))
 
     return imgRotated
 
@@ -84,7 +84,9 @@ def showImage(matrix, rotatedImage, pente, p) -> None:
 
 
 def main() -> None:
-    imagePath = "MacsOCR/18:03:26/Image/imageDepart/1/1t.png"
+    number = 2
+    font = "t"
+    imagePath = f"MacsOCR/25:03:26/Image/imageDepart/{number}/{number}{font}.png"
     binaryImage = binariasation(imagePath)
 
     pente, p = regression(binaryImage)
