@@ -17,14 +17,16 @@ def indexation(path: str) -> list:
     files = []
 
     for numberFolder in listdir(path):
-        if numberFolder.isdigit() or numberFolder=="perso":
+        if numberFolder.isdigit():
             for file in listdir(path + "/" + numberFolder):
                 files.append(f"{path}/{numberFolder}/{file}")
 
     return files
 
 
-def indexFile(path: str):
+def indexFile(
+    path: str,
+) -> tuple[Any | int, Any | int, Any | int, Any | int, Any | int, int, int]:
     image = normalisation(path)
     data = caracterisation(image)
     return data

@@ -7,6 +7,7 @@ from typing import Any
 from normalisation import *
 from caracterisation import *
 import db
+import knn
 
 
 ###################
@@ -74,8 +75,8 @@ def testFichier():
 
     print("Nombre intersection en x et y :", intersect(croppedImage))
 
-    print("densité : ", densité(croppedImage))
-    print("densite par morceaux : ", densité_par_morceaux(croppedImage))
+    print("densité : ", densite(croppedImage))
+    print("densite par morceaux : ", densite_par_morceaux(croppedImage))
 
     showImage(binaryImage, rotatedImage, croppedImage, pente, p)
 
@@ -87,14 +88,21 @@ def testFichier():
 
 def main() -> None:
     path = "MacsOCR/01:04:26/Image/imageDepart"
-
+    file = "/Users/antoine/Documents/etude/l2/s4/MaCs/projet/image_test/test23.png"
     ############################
     # création base de données #
     ############################
 
+    mon_image = (list(db.indexFile(file)), file.split("/")[-1])
+    print(mon_image)
+
     database = db.create_db(path)
 
-    print(database)
+    distances = knn.calcul_distance_total(database,mon_image)
+
+    print(knn.find(distances, k=3))
+
+    # print(database)
 
 
 if __name__ == "__main__":
