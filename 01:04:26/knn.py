@@ -3,7 +3,7 @@ import math
 def calcul_distance(x,y):
     result = 0
 
-    for i in range(len(x)) :
+    for i in range(len(x[0])) :
         result+=(y[0][i] - x[0][i])**2
     return math.sqrt(result)
 

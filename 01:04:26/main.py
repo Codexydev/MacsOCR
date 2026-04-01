@@ -88,7 +88,7 @@ def testFichier():
 
 def main() -> None:
     path = "MacsOCR/01:04:26/Image/imageDepart"
-    file = "/Users/antoine/Documents/etude/l2/s4/MaCs/projet/image_test/test23.png"
+    file = "/Users/antoine/Documents/etude/l2/s4/MaCs/projet/image_test/test24.png"
     ############################
     # création base de données #
     ############################

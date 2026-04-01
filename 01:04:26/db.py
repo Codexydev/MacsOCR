@@ -1,8 +1,6 @@
-from curses.ascii import isdigit
 from os import listdir
 from os.path import isfile, join
 from typing import Any
-from xml.dom.expatbuilder import FilterCrutch
 
 from normalisation import normalisation
 from caracterisation import caracterisation
