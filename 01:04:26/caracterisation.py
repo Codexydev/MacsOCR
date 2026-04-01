@@ -3,7 +3,13 @@ import numpy as np
 from matplotlib import pyplot as plt
 import math
 from typing import Any
+
 from normalisation import cropping
+
+##################################
+# Caractérisation de notre image #
+##################################
+
 
 def intersect(image: Image.Image) -> tuple[int, int]:
     middle_x = image.size[0] / 2
@@ -24,6 +30,7 @@ def intersect(image: Image.Image) -> tuple[int, int]:
     ly.append(False)
 
     return (lx.count(True), ly.count(True))
+
 
 def densité(image) -> Any | int:
     largeur = image.size[0]
@@ -72,3 +79,18 @@ def densité_par_morceaux(image) -> tuple[Any | int, Any | int, Any | int, Any |
     densite_bd = densité(img_bd)
 
     return (densite_bg, densite_bd, densite_hg, densite_hd)
+
+
+#######################
+# Fonction principale #
+#######################
+
+
+def caracterisation(
+    img: Image.Image,
+) -> tuple[Any | int, Any | int, Any | int, Any | int, Any | int, int, int]:
+    densite = densité(img)
+    (hg, hd, bg, bd) = densité_par_morceaux(img)
+    (x, y) = intersect(img)
+
+    return (densite, hg, hd, bg, bd, x, y)

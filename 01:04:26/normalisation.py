@@ -4,6 +4,12 @@ from matplotlib import pyplot as plt
 import math
 from typing import Any
 
+
+#######################
+# Normalisation image #
+#######################
+
+
 def binariasation(imagePath: str) -> list[Any]:
     """
     Permet de binariser une image donc le chemin est passé en paramètre
@@ -29,12 +35,10 @@ def binariasation(imagePath: str) -> list[Any]:
             else:
                 coordX.append((255, 255, 255))
 
-            # print(str(pixel)+" ", end="|")
-        # print(coordX)
-
         pixelArray.append(coordX)
 
     return pixelArray
+
 
 def regression(img) -> tuple[float, float]:
     x = []
@@ -58,7 +62,8 @@ def regression(img) -> tuple[float, float]:
 
     return pente, float(p)
 
-def cropping(image:Image.Image) -> Image.Image:
+
+def cropping(image: Image.Image) -> Image.Image:
     Xmin = image.size[0]
     Ymin = image.size[1]
     Xmax = 0
@@ -78,9 +83,27 @@ def cropping(image:Image.Image) -> Image.Image:
 
     return image.crop((Xmin, Ymin, Xmax + 1, Ymax + 1))
 
+
 def rotateImage(imgMatrix, slope) -> Image.Image:
     img = np.asarray(imgMatrix, dtype=np.uint8)
     img = Image.fromarray(img)
     imgRotated = img.rotate(slope, expand=True, fillcolor=(255, 255, 255))
 
     return imgRotated
+
+
+#######################
+# Fonction principale #
+#######################
+
+
+def normalisation(path: str) -> Image.Image:
+    binaryImage = binariasation(path)
+    pente, p = regression(binaryImage)
+
+    angle_rad = math.atan(pente)
+    angle_deg = math.degrees(angle_rad)
+
+    rotatedImage = rotateImage(binaryImage, -angle_deg)
+    croppedImage = cropping(rotatedImage)
+    return croppedImage

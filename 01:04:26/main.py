@@ -6,6 +6,12 @@ from typing import Any
 # import perso
 from normalisation import *
 from caracterisation import *
+import db
+
+
+###################
+# Affichage Image #
+###################
 
 
 def showImage(matrix, rotatedImage, imageCropped, pente, p) -> None:
@@ -35,8 +41,12 @@ def showImage(matrix, rotatedImage, imageCropped, pente, p) -> None:
     plt.show()
 
 
-def main() -> None:
+###############################
+# Test complet sur in fichier #
+###############################
 
+
+def testFichier():
     #########################
     # import de notre image #
     #########################
@@ -68,6 +78,23 @@ def main() -> None:
     print("densite par morceaux : ", densité_par_morceaux(croppedImage))
 
     showImage(binaryImage, rotatedImage, croppedImage, pente, p)
+
+
+#############################
+# Main du projet au complet #
+#############################
+
+
+def main() -> None:
+    path = "MacsOCR/01:04:26/Image/imageDepart"
+
+    ############################
+    # création base de données #
+    ############################
+
+    database = db.create_db(path)
+
+    print(database)
 
 
 if __name__ == "__main__":
