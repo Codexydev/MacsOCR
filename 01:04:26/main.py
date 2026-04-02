@@ -14,11 +14,9 @@ from caracterisation import *
 import db
 import knn
 
-
 ###################
 # Affichage Image #
 ###################
-
 
 def showImage(matrix, rotatedImage, imageCropped, pente, p) -> None:
     """
@@ -85,31 +83,28 @@ def testFichier():
 
     showImage(binaryImage, rotatedImage, croppedImage, pente, p)
 
-
 #############################
 # Main du projet au complet #
 #############################
 
-
 def main() -> None:
-    path = "MacsOCR/01:04:26/Image/MNIST"
-    number_test = 3
+    path = "/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/01:04:26/Image/MNIST"
+    number_test = 5
+    number_image = 12
     
-    fileMNIST = f"/Users/antoine/Documents/etude/l2/s4/MaCs/projet/train_image/MNIST/{number_test}/{number_test}_dataset_6.png"
-    fileperso = f"/Users/antoine/Documents/etude/l2/s4/MaCs/projet/train_image/perso/1.jpeg"
+    file_MNIST = f"/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/train_image/MNIST/{number_test}/{number_test}_dataset_{number_image}.png"
+    file_perso = f"/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/train_image/perso/1.jpeg"
 
-    file  = fileperso
+    file  = file_perso
     path_csv = 'journal.csv'
 
     ############################
     # création base de données #
     ############################
-    
+
     print("")
     mon_image = (list(db.indexFile(file)), file.split("/")[-1])
     print("Données de mon image :",mon_image)
-
-
 
     if os.path.exists(path_csv):
         print("\nChargement rapide de la base de données depuis le CSV...")
@@ -124,8 +119,8 @@ def main() -> None:
 
     distances = knn.calcul_distance_total(database,mon_image)
 
-    print("Prédiction :",knn.find(distances, k=3))
-    
+    print("Prédiction :", knn.find(distances, 101))
+
 
 if __name__ == "__main__":
     t = time.time()

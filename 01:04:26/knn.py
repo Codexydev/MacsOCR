@@ -14,7 +14,7 @@ def calcul_distance_total(tab,mon_image):
     result.sort()
     return result
 
-def find(distances, k=3):
+def find(distances, k):
     k_voisins = distances[:k]
     
     votes = {}
