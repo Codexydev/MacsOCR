@@ -1,3 +1,5 @@
+from hashlib import file_digest
+
 import numpy as np
 from matplotlib import pyplot as plt
 import math
@@ -90,12 +92,19 @@ def testFichier():
 
 
 def main() -> None:
-    path = "MacsOCR/01:04:26/Image/imageDepart"
-    file = "/Users/antoine/Documents/etude/l2/s4/MaCs/projet/image_test/1.jpeg"
+    path = "MacsOCR/01:04:26/Image/MNIST"
+    number_test = 3
+    
+    fileMNIST = f"/Users/antoine/Documents/etude/l2/s4/MaCs/projet/train_image/MNIST/{number_test}/{number_test}_dataset_6.png"
+    fileperso = f"/Users/antoine/Documents/etude/l2/s4/MaCs/projet/train_image/perso/1.jpeg"
+
+    file  = fileperso
     path_csv = 'journal.csv'
+
     ############################
     # création base de données #
     ############################
+    
     print("")
     mon_image = (list(db.indexFile(file)), file.split("/")[-1])
     print("Données de mon image :",mon_image)
