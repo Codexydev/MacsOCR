@@ -19,23 +19,29 @@ def binariasation(imagePath: str) -> list[Any]:
     img = Image.open(imagePath)
     pixelArray = []
 
-    for y in range(img.size[1]):
-        coordX = []
+    pixels = img.load()
 
-        for x in range(img.size[0]):
-            pixel = img.getpixel((x, y))
+    if pixels is not None :
 
-            if isinstance(pixel, tuple):
-                colorAverage = (pixel[0] + pixel[1] + pixel[2]) / 3
-            elif isinstance(pixel, (int, float)):
-                colorAverage = pixel
+        for y in range(img.size[1]):
+            coordX = []
 
-            if colorAverage < 128:
-                coordX.append((0, 0, 0))
-            else:
-                coordX.append((255, 255, 255))
+            for x in range(img.size[0]):
+                
+                pixel = pixels[x,y]
 
-        pixelArray.append(coordX)
+                
+                if isinstance(pixel, tuple):
+                    colorAverage = (pixel[0] + pixel[1] + pixel[2]) / 3
+                elif isinstance(pixel, (int, float)):
+                    colorAverage = pixel
+
+                if colorAverage < 128:
+                    coordX.append((0, 0, 0))
+                else:
+                    coordX.append((255, 255, 255))
+
+            pixelArray.append(coordX)
 
     return pixelArray
 
@@ -64,22 +70,25 @@ def regression(img) -> tuple[float, float]:
 
 
 def cropping(image: Image.Image) -> Image.Image:
+    pixels = image.load()
+
     Xmin = image.size[0]
     Ymin = image.size[1]
     Xmax = 0
     Ymax = 0
 
-    for y in range(image.size[1]):
-        for x in range(image.size[0]):
-            if image.getpixel((x, y)) == (0, 0, 0):
-                if x < Xmin:
-                    Xmin = x
-                if x > Xmax:
-                    Xmax = x
-                if y < Ymin:
-                    Ymin = y
-                if y > Ymax:
-                    Ymax = y
+    if pixels is not None :
+        for y in range(image.size[1]):
+            for x in range(image.size[0]):
+                if pixels[x,y] == (0, 0, 0):
+                    if x < Xmin:
+                        Xmin = x
+                    if x > Xmax:
+                        Xmax = x
+                    if y < Ymin:
+                        Ymin = y
+                    if y > Ymax:
+                        Ymax = y
 
     return image.crop((Xmin, Ymin, Xmax + 1, Ymax + 1))
 

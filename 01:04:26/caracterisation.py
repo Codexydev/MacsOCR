@@ -18,13 +18,16 @@ def intersect(image: Image.Image) -> tuple[int, int]:
     lx = [False]
     ly = [False]
 
-    for i in range(image.size[0]):
-        if (image.getpixel((i, int(middle_y))) == (0, 0, 0)) != lx[-1]:
-            lx.append(image.getpixel((i, int(middle_y))) == (0, 0, 0))
+    pixels = image.load()
 
-    for j in range(image.size[1]):
-        if (image.getpixel((int(middle_x), j)) == (0, 0, 0)) != ly[-1]:
-            ly.append(image.getpixel((int(middle_x), j)) == (0, 0, 0))
+    if pixels is not None :
+        for i in range(image.size[0]):
+            if (pixels[i, int(middle_y)] == (0, 0, 0)) != lx[-1]:
+                lx.append(pixels[i, int(middle_y)] == (0, 0, 0))
+
+        for j in range(image.size[1]):
+            if (pixels[int(middle_x), j] == (0, 0, 0)) != ly[-1]:
+                ly.append(pixels[int(middle_x), j] == (0, 0, 0))
 
     lx.append(False)
     ly.append(False)
@@ -38,10 +41,12 @@ def compter_pixels_noirs(image: Image.Image) -> int:
     hauteur = image.size[1]
     nb_pixels_noirs = 0
 
-    for i in range(largeur):
-        for j in range(hauteur):
-            if image.getpixel((i, j)) == (0, 0, 0):
-                nb_pixels_noirs += 1
+    pixels = image.load()
+    if pixels is not None :
+        for i in range(largeur):
+            for j in range(hauteur):
+                if pixels[i,j] == (0, 0, 0):
+                    nb_pixels_noirs += 1
                 
     return nb_pixels_noirs
 

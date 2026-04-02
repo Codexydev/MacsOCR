@@ -3,6 +3,8 @@ from matplotlib import pyplot as plt
 import math
 from typing import Any
 
+import time
+
 # import perso
 from normalisation import *
 from caracterisation import *
@@ -101,9 +103,11 @@ def main() -> None:
     distances = knn.calcul_distance_total(database,mon_image)
 
     print(knn.find(distances, k=3))
-
+    
     # print(database)
 
 
 if __name__ == "__main__":
+    t = time.time()
     main()
+    print("temps :",time.time()-t)
