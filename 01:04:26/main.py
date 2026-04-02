@@ -4,6 +4,7 @@ import math
 from typing import Any
 
 import time
+import os
 
 # import perso
 from normalisation import *
@@ -90,24 +91,34 @@ def testFichier():
 
 def main() -> None:
     path = "MacsOCR/01:04:26/Image/imageDepart"
-    file = "/Users/antoine/Documents/etude/l2/s4/MaCs/projet/image_test/test24.png"
+    file = "/Users/antoine/Documents/etude/l2/s4/MaCs/projet/image_test/1.jpeg"
+    path_csv = 'journal.csv'
     ############################
     # création base de données #
     ############################
-
+    print("")
     mon_image = (list(db.indexFile(file)), file.split("/")[-1])
-    print(mon_image)
+    print("Données de mon image :",mon_image)
 
-    database = db.create_db(path)
+
+
+    if os.path.exists(path_csv):
+        print("\nChargement rapide de la base de données depuis le CSV...")
+        database = db.charger_journal(path_csv)
+    else:
+        print("\nCalcul de la base de données en cours...")
+        database = db.create_db(path)
+        db.creer_journal(path_csv, database)
+        print("Base de données sauvegardée dans le CSV !\n")
+
+    print(ratio(normalisation(file)))
 
     distances = knn.calcul_distance_total(database,mon_image)
 
-    print(knn.find(distances, k=3))
+    print("Prédiction :",knn.find(distances, k=3))
     
-    # print(database)
-
 
 if __name__ == "__main__":
     t = time.time()
     main()
-    print("temps :",time.time()-t)
+    print("\ntemps d'execution :",time.time()-t)

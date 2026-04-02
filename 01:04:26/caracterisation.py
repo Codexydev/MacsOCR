@@ -111,6 +111,9 @@ def densite_par_morceaux(image: Image.Image)  -> tuple[float, float, float, floa
 
     return (densite_hg, densite_hd, densite_bg, densite_bd, densite_h,densite_b, densite_g, densite_d)
 
+def ratio(image:Image.Image):
+    return image.size
+
 #######################
 # Fonction principale #
 #######################
@@ -121,5 +124,6 @@ def caracterisation(img: Image.Image,) -> Any:
 
     (hg, hd, bg, bd, h, b, g, d) = densite_par_morceaux(img)
     (x, y) = intersect(img)
+    (size_x,size_y) = ratio(img)
 
-    return (dens, hg, hd, bg, bd, h, b, g, d, x / 5.0, y / 5.0)
+    return (dens, hg, hd, bg, bd, h, b, g, d, x / 5.0, y / 5.0, size_x/1000, size_y/1000)
