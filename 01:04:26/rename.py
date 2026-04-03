@@ -1,10 +1,9 @@
 import os
 
 def renommer_dataset():
-    chemin_base = "MacsOCR/01:04:26/Image/MNIST"
+    chemin_base = "/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/train_image/MNIST"
     
     for nom_dossier in os.listdir(chemin_base):
-        
         if nom_dossier.isdigit():
             chemin_dossier = os.path.join(chemin_base, nom_dossier)
             
@@ -12,13 +11,12 @@ def renommer_dataset():
             
             for index, nom_fichier in enumerate(fichiers):
                 if nom_fichier.endswith(('.png', '.jpg', '.jpeg', '.JPG')):
-                
-                    if nom_fichier.startswith(nom_dossier):
-                        continue
+                    # if nom_fichier.startswith(nom_dossier):
+                    #     continue
 
                     ancien_chemin = os.path.join(chemin_dossier, nom_fichier)
-                    
-                    nouveau_nom = f"{nom_dossier}_dataset_{index}.png"
+
+                    nouveau_nom = f"{nom_dossier}_dataset_{str(index)}.png"
                     nouveau_chemin = os.path.join(chemin_dossier, nouveau_nom)
                     
                     os.rename(ancien_chemin, nouveau_chemin)

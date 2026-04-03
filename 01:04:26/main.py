@@ -1,5 +1,3 @@
-from hashlib import file_digest
-
 import numpy as np
 from matplotlib import pyplot as plt
 import math
@@ -89,14 +87,14 @@ def testFichier(path):
 
 def main() -> None:
     path = "/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/01:04:26/Image/MNIST"
-    number_test = 7
+    number_test = 1
     number_image = 5
     
     file_MNIST = f"/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/train_image/MNIST/{number_test}/{number_test}_dataset_{number_image}.png"
     file_perso = f"/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/train_image/perso/test24.png"
 
-    file  = file_perso
-    path_csv = 'database.csv'
+    file  = file_MNIST
+    path_csv = '/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/database.csv'
 
     ############################
     # création base de données #
