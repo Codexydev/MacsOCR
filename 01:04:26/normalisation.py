@@ -90,7 +90,18 @@ def cropping(image: Image.Image) -> Image.Image:
                     if y > Ymax:
                         Ymax = y
 
-    return image.crop((Xmin, Ymin, Xmax + 1, Ymax + 1))
+    image_recadree = image.crop((Xmin, Ymin, Xmax + 1, Ymax + 1))
+    image_standardisee = image_recadree.resize((28, 28), Image.Resampling.LANCZOS)
+    pixels_std = image_standardisee.load()
+    if pixels_std is not None :
+        for x in range(28):
+            for y in range(28):
+                if sum(pixels_std[x,y][:3]) / 3 < 128: # Si c'est plutôt sombre
+                    pixels_std[x,y] = (0, 0, 0)        # Noir pur
+                else:
+                    pixels_std[x,y] = (255, 255, 255)  # Blanc pur
+                    
+    return image_standardisee
 
 
 def rotateImage(imgMatrix, slope) -> Image.Image:

@@ -50,13 +50,13 @@ def showImage(matrix, rotatedImage, imageCropped, pente, p) -> None:
 ###############################
 
 
-def testFichier():
+def testFichier(path):
     #########################
     # import de notre image #
     #########################
     number = 7
     font = "t"
-    imagePath = f"MacsOCR/25:03:26/Image/imageDepart/{number}/{number}{font}.png"
+    imagePath = path
 
     ################################
     # normalisation de notre image #
@@ -89,14 +89,14 @@ def testFichier():
 
 def main() -> None:
     path = "/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/01:04:26/Image/MNIST"
-    number_test = 5
-    number_image = 12
+    number_test = 7
+    number_image = 5
     
     file_MNIST = f"/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/train_image/MNIST/{number_test}/{number_test}_dataset_{number_image}.png"
-    file_perso = f"/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/train_image/perso/1.jpeg"
+    file_perso = f"/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/train_image/perso/test24.png"
 
     file  = file_perso
-    path_csv = 'journal.csv'
+    path_csv = 'database.csv'
 
     ############################
     # création base de données #
@@ -115,13 +115,16 @@ def main() -> None:
         db.creer_journal(path_csv, database)
         print("Base de données sauvegardée dans le CSV !\n")
 
+    print(f"Nombre d'images dans la base : {len(database)}")
     print(ratio(normalisation(file)))
 
     distances = knn.calcul_distance_total(database,mon_image)
 
     print("Prédiction :", knn.find(distances, 101))
 
-
+    print("")
+    # testFichier(file)
+    # testFichier("/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/01:04:26/Image/MNIST/2/2_dataset_19.png")
 if __name__ == "__main__":
     t = time.time()
     main()

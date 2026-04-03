@@ -123,7 +123,9 @@ def caracterisation(img: Image.Image,) -> Any:
     dens = densite(img)
 
     (hg, hd, bg, bd, h, b, g, d) = densite_par_morceaux(img)
-    (x, y) = intersect(img)
-    (size_x,size_y) = ratio(img)
+    (inter_x, inter_y) = intersect(img)
 
-    return (dens, hg, hd, bg, bd, h, b, g, d, x / 5.0, y / 5.0, size_x/1000, size_y/1000)
+    (size_x,size_y) = ratio(img)
+    ratio_size = float(size_x) / float(size_y)
+
+    return (dens, hg, hd, bg, bd, h, b, g, d, inter_x / 8.0, inter_y / 8.0, ratio_size)

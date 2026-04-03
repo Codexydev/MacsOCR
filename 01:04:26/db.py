@@ -47,7 +47,7 @@ def creer_journal(path: str, db):
         writer = csv.writer(csvfile, delimiter=';')
         writer.writerow([
             'densite', 'densite_hg', 'densite_hd', 'densite_bg', 'densite_bd', 
-            'densite_h', 'densite_b', 'densite_g', 'densite_d', 'x_inter', 'y_inter', 'size_x' , 'size_y', 
+            'densite_h', 'densite_b', 'densite_g', 'densite_d', 'x_inter', 'y_inter', 'ratio_size', 
             'label'
         ])
         for image in db:
