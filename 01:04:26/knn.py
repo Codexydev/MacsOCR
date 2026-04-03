@@ -14,7 +14,7 @@ def calcul_distance_total(tab,mon_image):
     result.sort()
     return result
 
-def find(distances, k):
+def find(distances, k, display):
     k_voisins = distances[:k]
     
     votes = {}
@@ -26,8 +26,9 @@ def find(distances, k):
             votes[vrai_chiffre] += 1
         else:
             votes[vrai_chiffre] = 1
-            
-    print(f"Détail des {k} votes : {votes}")
+    
+    if display : print(f"Détail des {k} votes : {votes}") 
+    
             
     meilleur_chiffre = None
     max_votes = 0

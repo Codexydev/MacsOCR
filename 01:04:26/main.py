@@ -118,7 +118,7 @@ def main() -> None:
 
     distances = knn.calcul_distance_total(database,mon_image)
 
-    print("Prédiction :", knn.find(distances, 101))
+    print("Prédiction :", knn.find(distances, 101, True))
 
     print("")
     # testFichier(file)

@@ -26,13 +26,13 @@ for i in range(0,9):
 
         file = f"/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/train_image/MNIST/{i}/{i}_dataset_{j}.png"
 
-        print("")
         mon_image = (list(db.indexFile(file)), file.split("/")[-1])
         # print("Données de mon image :",mon_image)
 
         distances = knn.calcul_distance_total(database,mon_image)
 
-        prediction = knn.find(distances, 101)
+        prediction = knn.find(distances, 101, False)
+
 
         if int(prediction) == int(i):
             win +=1
