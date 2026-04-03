@@ -127,3 +127,4 @@ if __name__ == "__main__":
     t = time.time()
     main()
     print("\ntemps d'execution :",time.time()-t)
+    # testFichier("/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/train_image/perso/test24.png")

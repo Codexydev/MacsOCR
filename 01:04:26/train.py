@@ -10,31 +10,37 @@ from normalisation import *
 from caracterisation import *
 import db
 import knn
+import time
 
+def main():
+    path = "/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/01:04:26/Image/MNIST"
+    path_csv = '/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/database.csv'
 
-path = "/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/01:04:26/Image/MNIST"
-path_csv = '/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/database.csv'
+    win = 0
+    total_image = 100
 
-win = 0
-total_image = 100
+    if os.path.exists(path_csv):
+        database = db.charger_journal(path_csv)
 
-if os.path.exists(path_csv):
-    database = db.charger_journal(path_csv)
+    for i in range(0,9):
+        for j in range(10):
 
-for i in range(0,9):
-    for j in range(10):
+            file = f"/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/train_image/MNIST/{i}/{i}_dataset_{j}.png"
 
-        file = f"/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/train_image/MNIST/{i}/{i}_dataset_{j}.png"
+            mon_image = (list(db.indexFile(file)), file.split("/")[-1])
+            # print("Données de mon image :",mon_image)
 
-        mon_image = (list(db.indexFile(file)), file.split("/")[-1])
-        # print("Données de mon image :",mon_image)
+            distances = knn.calcul_distance_total(database,mon_image)
 
-        distances = knn.calcul_distance_total(database,mon_image)
+            prediction = knn.find(distances, 101, False)
 
-        prediction = knn.find(distances, 101, False)
+            if prediction is not None:
+                if int(prediction) == int(i):
+                    win +=1
+            
+    print("winrate :", win/total_image)
 
-
-        if int(prediction) == int(i):
-            win +=1
-        
-print("winrate :", win/total_image)
+if __name__ == "__main__":
+    t = time.time()
+    main()
+    print("\ntemps d'execution :",time.time()-t)

@@ -1,4 +1,5 @@
 import math
+import numpy as np
 
 def calcul_distance(x,y):
     result = 0
@@ -6,6 +7,11 @@ def calcul_distance(x,y):
     for i in range(len(x[0])) :
         result+=(y[0][i] - x[0][i])**2
     return math.sqrt(result)
+
+def calcul_distance_v2(x,y):
+    vecteur_x = np.array(x[0])
+    vecteur_y = np.array(y[0])
+    return np.linalg.norm(vecteur_x - vecteur_y)
 
 def calcul_distance_total(tab,mon_image):
     result = []
