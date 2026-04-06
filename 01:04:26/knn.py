@@ -16,7 +16,7 @@ def calcul_distance_v2(x,y):
 def calcul_distance_total(tab,mon_image):
     result = []
     for x in tab:
-        result.append((calcul_distance(x,mon_image),x[1]))
+        result.append((calcul_distance_v2(x,mon_image),x[1]))
     result.sort()
     return result
 
@@ -34,11 +34,10 @@ def find(distances, k, display):
             votes[vrai_chiffre] = 1
     
     if display : print(f"Détail des {k} votes : {votes}") 
-    
-            
+
     meilleur_chiffre = None
     max_votes = 0
-    
+
     for chiffre, nb_votes in votes.items():
         if nb_votes > max_votes:
             max_votes = nb_votes

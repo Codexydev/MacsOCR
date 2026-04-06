@@ -91,16 +91,31 @@ def cropping(image: Image.Image) -> Image.Image:
                         Ymax = y
 
     image_recadree = image.crop((Xmin, Ymin, Xmax + 1, Ymax + 1))
-    image_standardisee = image_recadree.resize((28, 28), Image.Resampling.LANCZOS)
+    image_recadree.thumbnail((28, 28), Image.Resampling.LANCZOS)
+    image_standardisee = Image.new('RGB', (28, 28), color=(255, 255, 255))
+    pos_x = (28 - image_recadree.size[0]) // 2
+    pos_y = (28 - image_recadree.size[1]) // 2
+    image_standardisee.paste(image_recadree, (pos_x, pos_y))
+    
     pixels_std = image_standardisee.load()
+
     if pixels_std is not None :
         for x in range(28):
             for y in range(28):
-                if sum(pixels_std[x,y][:3]) / 3 < 128: # Si c'est plutôt sombre
+                pixel = pixels_std[x,y]
+
+                if isinstance(pixel,tuple):
+                    moyenne = sum(pixel[:3]) / 3
+                elif isinstance(pixel, (int, float)):
+                    moyenne = float(pixel)
+                else:
+                    moyenne = 255.0
+
+                if moyenne < 128: # Si c'est plutôt sombre
                     pixels_std[x,y] = (0, 0, 0)        # Noir pur
                 else:
                     pixels_std[x,y] = (255, 255, 255)  # Blanc pur
-                    
+
     return image_standardisee
 
 

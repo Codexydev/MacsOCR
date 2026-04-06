@@ -111,6 +111,49 @@ def densite_par_morceaux(image: Image.Image)  -> tuple[float, float, float, floa
 
     return (densite_hg, densite_hd, densite_bg, densite_bd, densite_h,densite_b, densite_g, densite_d)
 
+def zoning_4x4(image: Image.Image) -> list[float]:
+    """
+    Découpe l'image 28x28 en 16 blocs de 7x7 pixels.
+    Calcule la densité d'encre pour chaque bloc de manière ultra-rapide avec Numpy.
+    """
+    matrice = np.array(image)
+
+    if len(matrice.shape) == 3:
+        matrice = matrice[:, :, 0]
+
+    total_noirs = np.sum(matrice == 0)
+    if total_noirs == 0:
+        total_noirs = 1
+
+    densites_zones = []
+
+    hauteur_bloc = matrice.shape[0] // 4
+    largeur_bloc = matrice.shape[1] // 4
+    
+    for ligne in range(4):
+        for col in range(4):
+            bloc = matrice[
+                ligne * hauteur_bloc : (ligne + 1) * hauteur_bloc,
+                col * largeur_bloc : (col + 1) * largeur_bloc
+            ]
+
+            noirs_bloc = np.sum(bloc == 0)
+            densites_zones.append(float(noirs_bloc) / total_noirs)
+
+    return densites_zones
+
+def caracterisation(image: Image.Image) -> tuple:
+    x_inter, y_inter = intersect(image)
+    
+    zones = zoning_4x4(image)
+
+    largeur, hauteur = image.size
+    ratio_size = float(largeur) / float(hauteur) if hauteur != 0 else 1.0
+
+    resultat = zones + [x_inter / 5.0, y_inter / 5.0, ratio_size]
+
+    return tuple(resultat)
+
 def ratio(image:Image.Image):
     return image.size
 
@@ -119,13 +162,13 @@ def ratio(image:Image.Image):
 #######################
 
 
-def caracterisation(img: Image.Image,) -> Any:
-    dens = densite(img)
+# def caracterisation(img: Image.Image,) -> Any:
+#     dens = densite(img)
 
-    (hg, hd, bg, bd, h, b, g, d) = densite_par_morceaux(img)
-    (inter_x, inter_y) = intersect(img)
+#     (hg, hd, bg, bd, h, b, g, d) = densite_par_morceaux(img)
+#     (inter_x, inter_y) = intersect(img)
 
-    (size_x,size_y) = ratio(img)
-    ratio_size = float(size_x) / float(size_y)
+#     (size_x,size_y) = ratio(img)
+#     ratio_size = float(size_x) / float(size_y)
 
-    return (dens, hg, hd, bg, bd, h, b, g, d, inter_x / 8.0, inter_y / 8.0, ratio_size)
+#     return (dens, hg, hd, bg, bd, h, b, g, d, inter_x / 8.0, inter_y / 8.0, ratio_size)

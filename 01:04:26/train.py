@@ -1,5 +1,3 @@
-from hashlib import file_digest
-
 import numpy as np
 from matplotlib import pyplot as plt
 from typing import Any
@@ -22,23 +20,23 @@ def main():
     if os.path.exists(path_csv):
         database = db.charger_journal(path_csv)
 
-    for i in range(0,9):
+    for i in range(10):
         for j in range(10):
 
-            file = f"/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/train_image/MNIST/{i}/{i}_dataset_{j}.png"
+            file = f"/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/test_image/MNIST/{i}/{i}_dataset_{j}.png"
 
             mon_image = (list(db.indexFile(file)), file.split("/")[-1])
             # print("Données de mon image :",mon_image)
 
             distances = knn.calcul_distance_total(database,mon_image)
 
-            prediction = knn.find(distances, 101, False)
+            prediction = knn.find(distances, 5, False)
 
             if prediction is not None:
                 if int(prediction) == int(i):
                     win +=1
-            
-    print("winrate :", win/total_image)
+
+    print("winrate :", float(win/total_image))
 
 if __name__ == "__main__":
     t = time.time()

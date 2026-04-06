@@ -45,19 +45,23 @@ def create_db(path: str):
 def creer_journal(path: str, db):
     with open(path, 'w', newline='') as csvfile:
         writer = csv.writer(csvfile, delimiter=';')
-        writer.writerow([
-            'densite', 'densite_hg', 'densite_hd', 'densite_bg', 'densite_bd', 
-            'densite_h', 'densite_b', 'densite_g', 'densite_d', 'x_inter', 'y_inter', 'ratio_size', 
-            'label'
-        ])
+        
+        # On crée les noms des 16 colonnes automatiquement : 'zone_0', 'zone_1'...
+        colonnes_zones = [f"zone_{i}" for i in range(16)]
+        
+        # On ajoute les autres colonnes à la fin
+        en_tete = colonnes_zones + ['x_inter', 'y_inter', 'ratio_size', 'label']
+        
+        writer.writerow(en_tete)
+        
         for image in db:
-                caracteristiques = image[0]
-                nom_image = image[1]
-                
-                line = list(caracteristiques)
-                line.append(nom_image)
-                
-                writer.writerow(line)
+            caracteristiques = image[0]
+            nom_image = image[1]
+            
+            line = list(caracteristiques)
+            line.append(nom_image)
+            
+            writer.writerow(line)
 
 def charger_journal(path: str) -> list:
     db = []

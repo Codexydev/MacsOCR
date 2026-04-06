@@ -86,14 +86,14 @@ def testFichier(path):
 #############################
 
 def main() -> None:
-    path = "/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/01:04:26/Image/MNIST"
+    path = "/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/01:04:26/Image/MNIST/"
     number_test = 1
     number_image = 5
     
-    file_MNIST = f"/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/train_image/MNIST/{number_test}/{number_test}_dataset_{number_image}.png"
-    file_perso = f"/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/train_image/perso/test24.png"
+    file_MNIST = f"/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/test_image/MNIST/{number_test}/{number_test}_dataset_{number_image}.png"
+    file_perso = f"/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/01:04:26/Image/imageDepart/0/0a.png"
 
-    file  = file_MNIST
+    file  = file_perso
     path_csv = '/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/database.csv'
 
     ############################
@@ -102,7 +102,7 @@ def main() -> None:
 
     print("")
     mon_image = (list(db.indexFile(file)), file.split("/")[-1])
-    print("Données de mon image :",mon_image)
+    # print("Données de mon image :",mon_image)
 
     if os.path.exists(path_csv):
         print("\nChargement rapide de la base de données depuis le CSV...")
@@ -118,7 +118,7 @@ def main() -> None:
 
     distances = knn.calcul_distance_total(database,mon_image)
 
-    print("Prédiction :", knn.find(distances, 101, True))
+    print("Prédiction :", knn.find(distances, 5, True))
 
     print("")
     # testFichier(file)
