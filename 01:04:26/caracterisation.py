@@ -20,7 +20,7 @@ def intersect(image: Image.Image) -> tuple[int, int]:
 
     pixels = image.load()
 
-    if pixels is not None :
+    if pixels is not None:
         for i in range(image.size[0]):
             if (pixels[i, int(middle_y)] == (0, 0, 0)) != lx[-1]:
                 lx.append(pixels[i, int(middle_y)] == (0, 0, 0))
@@ -42,12 +42,12 @@ def compter_pixels_noirs(image: Image.Image) -> int:
     nb_pixels_noirs = 0
 
     pixels = image.load()
-    if pixels is not None :
+    if pixels is not None:
         for i in range(largeur):
             for j in range(hauteur):
-                if pixels[i,j] == (0, 0, 0):
+                if pixels[i, j] == (0, 0, 0):
                     nb_pixels_noirs += 1
-                
+
     return nb_pixels_noirs
 
 
@@ -62,16 +62,18 @@ def densite(image: Image.Image) -> float:
         return float(nb_pixels_noirs) / float(nb_pixels_total)
 
 
-def densite_par_morceaux(image: Image.Image)  -> tuple[float, float, float, float, float, float, float, float]:
+def densite_par_morceaux(
+    image: Image.Image,
+) -> tuple[float, float, float, float, float, float, float, float]:
     """Répartition de l'encre : pourcentage de noir dans chaque quadrant par rapport à l'encre totale"""
     largeur = image.size[0]
     hauteur = image.size[1]
 
     img = cropping(image)
-    
+
     total_noirs = compter_pixels_noirs(img)
     if total_noirs == 0:
-        total_noirs = 1 
+        total_noirs = 1
 
     img_hg = img.crop(
         (0, 0, (largeur // 2 + largeur // 10), (hauteur // 2 + hauteur // 10))
@@ -91,11 +93,11 @@ def densite_par_morceaux(image: Image.Image)  -> tuple[float, float, float, floa
         )
     )
 
-    img_h = img.crop((0,0,largeur, hauteur//2 + hauteur//10))
-    img_b = img.crop((0, hauteur//2 - hauteur//10, largeur, hauteur))
+    img_h = img.crop((0, 0, largeur, hauteur // 2 + hauteur // 10))
+    img_b = img.crop((0, hauteur // 2 - hauteur // 10, largeur, hauteur))
 
-    img_g = img.crop((0,0,largeur//2 + largeur//10, hauteur))
-    img_d = img.crop((largeur//2 - largeur//10, 0, largeur, hauteur))
+    img_g = img.crop((0, 0, largeur // 2 + largeur // 10, hauteur))
+    img_d = img.crop((largeur // 2 - largeur // 10, 0, largeur, hauteur))
 
     densite_hg = compter_pixels_noirs(img_hg) / total_noirs
     densite_hd = compter_pixels_noirs(img_hd) / total_noirs
@@ -108,8 +110,17 @@ def densite_par_morceaux(image: Image.Image)  -> tuple[float, float, float, floa
     densite_g = compter_pixels_noirs(img_g) / total_noirs
     densite_d = compter_pixels_noirs(img_d) / total_noirs
 
+    return (
+        densite_hg,
+        densite_hd,
+        densite_bg,
+        densite_bd,
+        densite_h,
+        densite_b,
+        densite_g,
+        densite_d,
+    )
 
-    return (densite_hg, densite_hd, densite_bg, densite_bd, densite_h,densite_b, densite_g, densite_d)
 
 def zoning_4x4(image: Image.Image) -> list[float]:
     """
@@ -129,12 +140,12 @@ def zoning_4x4(image: Image.Image) -> list[float]:
 
     hauteur_bloc = matrice.shape[0] // 4
     largeur_bloc = matrice.shape[1] // 4
-    
+
     for ligne in range(4):
         for col in range(4):
             bloc = matrice[
                 ligne * hauteur_bloc : (ligne + 1) * hauteur_bloc,
-                col * largeur_bloc : (col + 1) * largeur_bloc
+                col * largeur_bloc : (col + 1) * largeur_bloc,
             ]
 
             noirs_bloc = np.sum(bloc == 0)
@@ -142,9 +153,10 @@ def zoning_4x4(image: Image.Image) -> list[float]:
 
     return densites_zones
 
+
 def caracterisation(image: Image.Image) -> tuple:
     x_inter, y_inter = intersect(image)
-    
+
     zones = zoning_4x4(image)
 
     largeur, hauteur = image.size
@@ -154,8 +166,10 @@ def caracterisation(image: Image.Image) -> tuple:
 
     return tuple(resultat)
 
-def ratio(image:Image.Image):
+
+def ratio(image: Image.Image):
     return image.size
+
 
 #######################
 # Fonction principale #

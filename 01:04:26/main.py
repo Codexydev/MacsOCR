@@ -16,6 +16,7 @@ import knn
 # Affichage Image #
 ###################
 
+
 def showImage(matrix, rotatedImage, imageCropped, pente, p) -> None:
     """
     Affiche notre image
@@ -48,13 +49,13 @@ def showImage(matrix, rotatedImage, imageCropped, pente, p) -> None:
 ###############################
 
 
-def testFichier(path):
+def testFichier(dataset_train):
     #########################
     # import de notre image #
     #########################
     number = 7
     font = "t"
-    imagePath = path
+    imagePath = dataset_train
 
     ################################
     # normalisation de notre image #
@@ -81,20 +82,27 @@ def testFichier(path):
 
     showImage(binaryImage, rotatedImage, croppedImage, pente, p)
 
+
 #############################
 # Main du projet au complet #
 #############################
 
+
 def main() -> None:
-    path = "/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/01:04:26/Image/MNIST/"
+    dataset_train = (
+        "/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/01:04:26/Image/MNIST/"
+    )
+
     number_test = 1
     number_image = 5
-    
     file_MNIST = f"/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/test_image/MNIST/{number_test}/{number_test}_dataset_{number_image}.png"
+
     file_perso = f"/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/01:04:26/Image/imageDepart/0/0a.png"
 
-    file  = file_perso
-    path_csv = '/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/database.csv'
+    k = 5
+
+    file = file_perso
+    db_csv = "/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/database.csv"
 
     ############################
     # création base de données #
@@ -104,27 +112,29 @@ def main() -> None:
     mon_image = (list(db.indexFile(file)), file.split("/")[-1])
     # print("Données de mon image :",mon_image)
 
-    if os.path.exists(path_csv):
+    if os.path.exists(db_csv):
         print("\nChargement rapide de la base de données depuis le CSV...")
-        database = db.charger_journal(path_csv)
+        database = db.charger_journal(db_csv)
     else:
         print("\nCalcul de la base de données en cours...")
-        database = db.create_db(path)
-        db.creer_journal(path_csv, database)
+        database = db.create_db(dataset_train)
+        db.creer_journal(db_csv, database)
         print("Base de données sauvegardée dans le CSV !\n")
 
     print(f"Nombre d'images dans la base : {len(database)}")
     print(ratio(normalisation(file)))
 
-    distances = knn.calcul_distance_total(database,mon_image)
+    distances = knn.calcul_distance_total(database, mon_image)
 
-    print("Prédiction :", knn.find(distances, 5, True))
+    print("Prédiction :", knn.find(distances, k, True))
 
     print("")
     # testFichier(file)
     # testFichier("/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/01:04:26/Image/MNIST/2/2_dataset_19.png")
+
+
 if __name__ == "__main__":
     t = time.time()
     main()
-    print("\ntemps d'execution :",time.time()-t)
+    print("\ntemps d'execution :", time.time() - t)
     # testFichier("/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/train_image/perso/test24.png")

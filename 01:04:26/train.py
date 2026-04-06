@@ -10,35 +10,34 @@ import db
 import knn
 import time
 
+
 def main():
-    path = "/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/01:04:26/Image/MNIST"
-    path_csv = '/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/database.csv'
+    db_csv = "/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/database.csv"
 
     win = 0
     total_image = 100
 
-    if os.path.exists(path_csv):
-        database = db.charger_journal(path_csv)
+    if os.path.exists(db_csv):
+        database = db.charger_journal(db_csv)
 
     for i in range(10):
         for j in range(10):
-
             file = f"/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/test_image/MNIST/{i}/{i}_dataset_{j}.png"
 
             mon_image = (list(db.indexFile(file)), file.split("/")[-1])
             # print("Données de mon image :",mon_image)
 
-            distances = knn.calcul_distance_total(database,mon_image)
-
+            distances = knn.calcul_distance_total(database, mon_image)
             prediction = knn.find(distances, 5, False)
 
             if prediction is not None:
                 if int(prediction) == int(i):
-                    win +=1
+                    win += 1
 
-    print("winrate :", float(win/total_image))
+    print("winrate :", float(win / total_image))
+
 
 if __name__ == "__main__":
     t = time.time()
     main()
-    print("\ntemps d'execution :",time.time()-t)
+    print("\ntemps d'execution :", time.time() - t)

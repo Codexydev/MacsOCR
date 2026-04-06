@@ -1,39 +1,44 @@
 import math
 import numpy as np
 
-def calcul_distance(x,y):
+
+def calcul_distance(x, y):
     result = 0
 
-    for i in range(len(x[0])) :
-        result+=(y[0][i] - x[0][i])**2
+    for i in range(len(x[0])):
+        result += (y[0][i] - x[0][i]) ** 2
     return math.sqrt(result)
 
-def calcul_distance_v2(x,y):
+
+def calcul_distance_v2(x, y):
     vecteur_x = np.array(x[0])
     vecteur_y = np.array(y[0])
     return np.linalg.norm(vecteur_x - vecteur_y)
 
-def calcul_distance_total(tab,mon_image):
+
+def calcul_distance_total(tab, mon_image):
     result = []
     for x in tab:
-        result.append((calcul_distance_v2(x,mon_image),x[1]))
+        result.append((calcul_distance_v2(x, mon_image), x[1]))
     result.sort()
     return result
 
+
 def find(distances, k, display):
     k_voisins = distances[:k]
-    
+
     votes = {}
-    
+
     for distance, nom_image in k_voisins:
-        vrai_chiffre = str(nom_image)[0] 
-        
+        vrai_chiffre = str(nom_image)[0]
+
         if vrai_chiffre in votes:
             votes[vrai_chiffre] += 1
         else:
             votes[vrai_chiffre] = 1
-    
-    if display : print(f"Détail des {k} votes : {votes}") 
+
+    if display:
+        print(f"Détail des {k} votes : {votes}")
 
     meilleur_chiffre = None
     max_votes = 0
@@ -42,7 +47,7 @@ def find(distances, k, display):
         if nb_votes > max_votes:
             max_votes = nb_votes
             meilleur_chiffre = chiffre
-            
+
     return meilleur_chiffre
 
 
@@ -53,6 +58,7 @@ def main():
     # test4 = ([0.4132796780684105, 0.3784485556637455, 0.3073677377474846, 0.38396624472573837, 0.37877312560856863, 0.4, 0.6], '6ss.png')
     # print(calcul_distance(test1,test4))
     ...
+
 
 if __name__ == "__main__":
     main()

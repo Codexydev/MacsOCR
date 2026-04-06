@@ -21,16 +21,15 @@ def binariasation(imagePath: str) -> list[Any]:
 
     pixels = img.load()
 
-    if pixels is not None :
+    if pixels is not None:
 
         for y in range(img.size[1]):
             coordX = []
 
             for x in range(img.size[0]):
-                
-                pixel = pixels[x,y]
 
-                
+                pixel = pixels[x, y]
+
                 if isinstance(pixel, tuple):
                     colorAverage = (pixel[0] + pixel[1] + pixel[2]) / 3
                 elif isinstance(pixel, (int, float)):
@@ -77,10 +76,10 @@ def cropping(image: Image.Image) -> Image.Image:
     Xmax = 0
     Ymax = 0
 
-    if pixels is not None :
+    if pixels is not None:
         for y in range(image.size[1]):
             for x in range(image.size[0]):
-                if pixels[x,y] == (0, 0, 0):
+                if pixels[x, y] == (0, 0, 0):
                     if x < Xmin:
                         Xmin = x
                     if x > Xmax:
@@ -92,29 +91,29 @@ def cropping(image: Image.Image) -> Image.Image:
 
     image_recadree = image.crop((Xmin, Ymin, Xmax + 1, Ymax + 1))
     image_recadree.thumbnail((28, 28), Image.Resampling.LANCZOS)
-    image_standardisee = Image.new('RGB', (28, 28), color=(255, 255, 255))
+    image_standardisee = Image.new("RGB", (28, 28), color=(255, 255, 255))
     pos_x = (28 - image_recadree.size[0]) // 2
     pos_y = (28 - image_recadree.size[1]) // 2
     image_standardisee.paste(image_recadree, (pos_x, pos_y))
-    
+
     pixels_std = image_standardisee.load()
 
-    if pixels_std is not None :
+    if pixels_std is not None:
         for x in range(28):
             for y in range(28):
-                pixel = pixels_std[x,y]
+                pixel = pixels_std[x, y]
 
-                if isinstance(pixel,tuple):
+                if isinstance(pixel, tuple):
                     moyenne = sum(pixel[:3]) / 3
                 elif isinstance(pixel, (int, float)):
                     moyenne = float(pixel)
                 else:
                     moyenne = 255.0
 
-                if moyenne < 128: # Si c'est plutôt sombre
-                    pixels_std[x,y] = (0, 0, 0)        # Noir pur
+                if moyenne < 128:  # Si c'est plutôt sombre
+                    pixels_std[x, y] = (0, 0, 0)  # Noir pur
                 else:
-                    pixels_std[x,y] = (255, 255, 255)  # Blanc pur
+                    pixels_std[x, y] = (255, 255, 255)  # Blanc pur
 
     return image_standardisee
 
