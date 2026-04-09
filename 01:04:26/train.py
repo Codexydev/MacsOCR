@@ -11,7 +11,7 @@ import time
 
 def main():
     db_csv = "/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/database.csv"
-    dataset = "MNIST"
+    dataset = "Chars74K"
     win = 0
     taille_grille  = 7
 
@@ -31,6 +31,7 @@ def main():
                 if int(prediction) == int(i):
                     win += 1
 
+    print("dataset :", dataset)
     print("winrate :", float( win / ((i+1)*(j+1)) ) )
 
 

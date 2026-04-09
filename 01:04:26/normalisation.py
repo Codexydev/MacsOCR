@@ -93,7 +93,7 @@ def cropping(image: Image.Image) -> Image.Image:
     
     image_recadree = image.crop((Xmin, Ymin, Xmax + 1, Ymax + 1))
 
-    image_recadree.thumbnail((20, 20), Image.Resampling.LANCZOS)
+    image_recadree.thumbnail((28, 28), Image.Resampling.LANCZOS)
     image_standardisee = Image.new("RGB", (28, 28), color=(255, 255, 255))
     pos_x = (28 - image_recadree.size[0]) // 2
     pos_y = (28 - image_recadree.size[1]) // 2

@@ -107,7 +107,7 @@ def CreateDb(dataset, k, db_csv, taille_grille) -> list[Any]:
 #############################
 
 def main() -> None:
-    dataset = "MNIST"
+    dataset = "Chars74K"
     k = 5
     taille_grille = 7
     db_csv = "/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/database.csv"
