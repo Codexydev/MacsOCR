@@ -1,6 +1,5 @@
 from PIL import Image
 import numpy as np
-from matplotlib import pyplot as plt
 import math
 from typing import Any
 
@@ -89,8 +88,12 @@ def cropping(image: Image.Image) -> Image.Image:
                     if y > Ymax:
                         Ymax = y
 
+    if Xmin > Xmax or Ymin > Ymax:
+        return image
+    
     image_recadree = image.crop((Xmin, Ymin, Xmax + 1, Ymax + 1))
-    image_recadree.thumbnail((28, 28), Image.Resampling.LANCZOS)
+
+    image_recadree.thumbnail((20, 20), Image.Resampling.LANCZOS)
     image_standardisee = Image.new("RGB", (28, 28), color=(255, 255, 255))
     pos_x = (28 - image_recadree.size[0]) // 2
     pos_y = (28 - image_recadree.size[1]) // 2

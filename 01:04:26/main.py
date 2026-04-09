@@ -49,7 +49,7 @@ def showImage(matrix, rotatedImage, imageCropped, pente, p) -> None:
 ###############################
 
 
-def testFichier(dataset_train):
+def NormalisationFichier(dataset_train):
     #########################
     # import de notre image #
     #########################
@@ -77,60 +77,56 @@ def testFichier(dataset_train):
 
     print("Nombre intersection en x et y :", intersect(croppedImage))
 
-    print("densité : ", densite(croppedImage))
-    print("densite par morceaux : ", densite_par_morceaux(croppedImage))
 
     showImage(binaryImage, rotatedImage, croppedImage, pente, p)
+
+
+############################
+# création base de données #
+############################
+
+def CreateDb(dataset, k, db_csv, taille_grille) -> list[Any]:
+    print("")
+
+    if os.path.exists(db_csv):
+        # print("\nChargement rapide de la base de données depuis le CSV...")
+        database = db.charger_journal(db_csv)
+    else:
+        print("\nCalcul de la base de données en cours...")
+        database = db.create_db(dataset, taille_grille)
+        db.creer_journal(db_csv, database, taille_grille)
+        print("Base de données sauvegardée dans le CSV !\n")
+
+    return database
+    # print(f"Nombre d'images dans la base : {len(database)}")
+    # print(ratio(normalisation(file)))
 
 
 #############################
 # Main du projet au complet #
 #############################
 
-
 def main() -> None:
-    dataset_train = (
-        "/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/01:04:26/Image/MNIST/"
-    )
+    dataset = "MNIST"
+    k = 5
+    taille_grille = 7
+    db_csv = "/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/database.csv"
+    dataset_train = f"/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/01:04:26/Image/{dataset}/"
 
     number_test = 1
     number_image = 5
-    file_MNIST = f"/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/test_image/MNIST/{number_test}/{number_test}_dataset_{number_image}.png"
-
-    file_perso = f"/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/01:04:26/Image/imageDepart/0/0a.png"
-
-    k = 5
-
+    file_MNIST = f"/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/test_image/{dataset}/{number_test}/{number_test}_dataset_{number_image}.png"
+    file_perso = f"/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/test_image/main2/13.jpeg"
     file = file_perso
-    db_csv = "/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/database.csv"
 
-    ############################
-    # création base de données #
-    ############################
 
-    print("")
-    mon_image = (list(db.indexFile(file)), file.split("/")[-1])
-    # print("Données de mon image :",mon_image)
-
-    if os.path.exists(db_csv):
-        print("\nChargement rapide de la base de données depuis le CSV...")
-        database = db.charger_journal(db_csv)
-    else:
-        print("\nCalcul de la base de données en cours...")
-        database = db.create_db(dataset_train)
-        db.creer_journal(db_csv, database)
-        print("Base de données sauvegardée dans le CSV !\n")
-
-    print(f"Nombre d'images dans la base : {len(database)}")
-    print(ratio(normalisation(file)))
-
+    database = CreateDb(dataset_train,k,db_csv, taille_grille)
+ 
+    mon_image = (list(db.indexFile(file, taille_grille)), file.split("/")[-1]) # ([list des pixel image], nom de l'image)
+    print("Données de mon image :",mon_image)
     distances = knn.calcul_distance_total(database, mon_image)
-
     print("Prédiction :", knn.find(distances, k, True))
-
     print("")
-    # testFichier(file)
-    # testFichier("/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/01:04:26/Image/MNIST/2/2_dataset_19.png")
 
 
 if __name__ == "__main__":

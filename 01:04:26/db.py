@@ -1,8 +1,8 @@
 from os import listdir
-from os.path import isfile, join
 from typing import Any
 import csv
 
+# import perso
 from normalisation import normalisation
 from caracterisation import caracterisation
 
@@ -23,9 +23,9 @@ def indexation(path: str) -> list:
     return files
 
 
-def indexFile(path: str):
+def indexFile(path: str, taille_grille: int = 4) -> tuple:
     image = normalisation(path)
-    data = caracterisation(image)
+    data = caracterisation(image, taille_grille)
     return data
 
 
@@ -34,24 +34,23 @@ def indexFile(path: str):
 #######################
 
 
-def create_db(path: str):
+def create_db(path: str, taille_grille: int):
     tab = indexation(path)
     data_base = []
     for fichier in tab:
-        data_base.append((list(indexFile(fichier)), fichier.split("/")[-1]))
+        data_base.append((list(indexFile(fichier, taille_grille)), fichier.split("/")[-1]))
     return data_base
 
 
-def creer_journal(path: str, db):
+def creer_journal(path: str, db, taille_grille: int):
     with open(path, 'w', newline='') as csvfile:
         writer = csv.writer(csvfile, delimiter=';')
         
-        # On crée les noms des 16 colonnes automatiquement : 'zone_0', 'zone_1'...
-        colonnes_zones = [f"zone_{i}" for i in range(16)]
+        # S'il y a une grille 7x7, ça créera automatiquement 49 colonnes "zone_X"
+        nb_zones = taille_grille * taille_grille
+        colonnes_zones = [f"zone_{i}" for i in range(nb_zones)]
         
-        # On ajoute les autres colonnes à la fin
         en_tete = colonnes_zones + ['x_inter', 'y_inter', 'ratio_size', 'label']
-        
         writer.writerow(en_tete)
         
         for image in db:
