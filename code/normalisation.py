@@ -129,18 +129,6 @@ def rotateImage(imgMatrix, slope) -> Image.Image:
     return imgRotated
 
 
-def squelettiser(image_pil):
-    matrice = np.array(image_pil.convert("L"))
-
-    image_binaire = matrice < 128
-
-    squelette = morphology.skeletonize(image_binaire)
-
-    matrice_finale = np.where(squelette, 0, 255).astype(np.uint8)
-
-    return Image.fromarray(matrice_finale)
-
-
 #######################
 # Fonction principale #
 #######################

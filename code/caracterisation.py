@@ -70,24 +70,3 @@ def caracterisation(image: Image.Image, taille_grille: int = 4) -> tuple:
     resultat = zones + [x_inter / 5.0, y_inter / 5.0, ratio_size]
 
     return tuple(resultat)
-
-
-def ratio(image: Image.Image):
-    return image.size
-
-
-#######################
-# Fonction principale #
-#######################
-
-
-# def caracterisation(img: Image.Image,) -> Any:
-#     dens = densite(img)
-
-#     (hg, hd, bg, bd, h, b, g, d) = densite_par_morceaux(img)
-#     (inter_x, inter_y) = intersect(img)
-
-#     (size_x,size_y) = ratio(img)
-#     ratio_size = float(size_x) / float(size_y)
-
-#     return (dens, hg, hd, bg, bd, h, b, g, d, inter_x / 8.0, inter_y / 8.0, ratio_size)
