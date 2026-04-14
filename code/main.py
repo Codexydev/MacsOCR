@@ -71,13 +71,13 @@ def NormalisationFichier(imagePath):
 
     print("Nombre intersection en x et y :", intersect(croppedImage))
 
-
     showImage(binaryImage, rotatedImage, croppedImage, pente, p)
 
 
 ############################
 # création base de données #
 ############################
+
 
 def CreateDb(dataset, k, db_csv, taille_grille) -> list[Any]:
     print("")
@@ -100,8 +100,9 @@ def CreateDb(dataset, k, db_csv, taille_grille) -> list[Any]:
 # Main du projet au complet #
 #############################
 
+
 def main() -> None:
-    dataset = "ipad_dataset"
+    dataset = "ipad_dataset_train"
     k = 5
     taille_grille = 7
     db_csv = "MacsOCR/database.csv"
@@ -110,17 +111,20 @@ def main() -> None:
     number_test = 1
     number_image = 5
     file_MNIST = f"/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/test_image/{dataset}/{number_test}/{number_test}_dataset_{number_image}.png"
-    file_perso = f"MacsOCR/test_image/main1/6.jpg"
+    file_perso = f"MacsOCR/test_image/main1/3.jpg"
     file = file_perso
 
-    database = CreateDb(dataset_train,k,db_csv, taille_grille)
+    database = CreateDb(dataset_train, k, db_csv, taille_grille)
 
-    mon_image = (list(db.indexFile(file, taille_grille)), file.split("/")[-1]) # ([list des pixel image], nom de l'image)
+    mon_image = (
+        list(db.indexFile(file, taille_grille)),
+        file.split("/")[-1],
+    )  # ([list des pixel image], nom de l'image)
     # print("Données de mon image :",mon_image)
     distances = knn.calcul_distance_total(database, mon_image)
     print("dataset :", dataset)
     print("Prédiction :", knn.find(distances, k, True))
-    print("réponse :",file.split("/")[-1][0])
+    print("réponse :", file.split("/")[-1][0])
     print("")
 
     # NormalisationFichier("MacsOCR/01:04:26/Image/MNIST/4/4_dataset_26.png")

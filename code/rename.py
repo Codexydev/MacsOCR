@@ -2,9 +2,7 @@ import os
 
 
 def renommer_dataset():
-    chemin_base = (
-        "/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/test_image/ipad_dataset"
-    )
+    chemin_base = "/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/test_image/ipad_dataset"
 
     for nom_dossier in os.listdir(chemin_base):
         if nom_dossier.isdigit():

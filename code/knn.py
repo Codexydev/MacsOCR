@@ -2,6 +2,7 @@ import math
 import numpy as np
 from typing import Any
 
+
 def calcul_distance(x, y) -> np.floating[Any]:
     vecteur_x = np.array(x[0])
     vecteur_y = np.array(y[0])
@@ -29,7 +30,8 @@ def find(distances, k, display) -> None | Any:
         else:
             votes[vrai_chiffre] = 1
 
-    if display:print(f"Détail des {k} votes : {votes}")
+    if display:
+        print(f"Détail des {k} votes : {votes}")
 
     meilleur_chiffre = None
     max_votes = 0

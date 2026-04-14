@@ -17,7 +17,7 @@ def intersect(image: Image.Image) -> tuple[int, int]:
 
     pixels = image.load()
 
-    if pixels is not None :
+    if pixels is not None:
         for i in range(image.size[0]):
             if (pixels[i, int(middle_y)] == (0, 0, 0)) != lx[-1]:
                 lx.append(pixels[i, int(middle_y)] == (0, 0, 0))
@@ -44,7 +44,7 @@ def intersect(image: Image.Image) -> tuple[int, int]:
 #             for j in range(hauteur):
 #                 if pixels[i,j] == (0, 0, 0):
 #                     nb_pixels_noirs += 1
-                
+
 #     return nb_pixels_noirs
 
 
@@ -65,10 +65,10 @@ def intersect(image: Image.Image) -> tuple[int, int]:
 #     hauteur = image.size[1]
 
 #     img = image
-    
+
 #     total_noirs = compter_pixels_noirs(img)
 #     if total_noirs == 0:
-#         total_noirs = 1 
+#         total_noirs = 1
 
 #     img_hg = img.crop(
 #         (0, 0, (largeur // 2 + largeur // 10), (hauteur // 2 + hauteur // 10))
@@ -109,7 +109,6 @@ def intersect(image: Image.Image) -> tuple[int, int]:
 #     return (densite_hg, densite_hd, densite_bg, densite_bd, densite_h,densite_b, densite_g, densite_d)
 
 
-
 def zoning_dynamique(image: Image.Image, taille_grille: int) -> list[float]:
     """
     Découpe l'image en une grille de (taille_grille x taille_grille).
@@ -131,18 +130,16 @@ def zoning_dynamique(image: Image.Image, taille_grille: int) -> list[float]:
     for i in range(taille_grille):
         for j in range(taille_grille):
 
-            bloc = matrice[
-                limites[i] : limites[i+1],
-                limites[j] : limites[j+1]
-            ]
+            bloc = matrice[limites[i] : limites[i + 1], limites[j] : limites[j + 1]]
             noirs = np.sum(bloc == 0)
             densites.append(float(noirs) / total_noirs)
 
     return densites
 
+
 def caracterisation(image: Image.Image, taille_grille: int = 4) -> tuple:
     x_inter, y_inter = intersect(image)
-    
+
     zones = zoning_dynamique(image, taille_grille)
 
     largeur, hauteur = image.size
@@ -152,8 +149,10 @@ def caracterisation(image: Image.Image, taille_grille: int = 4) -> tuple:
 
     return tuple(resultat)
 
-def ratio(image:Image.Image):
+
+def ratio(image: Image.Image):
     return image.size
+
 
 #######################
 # Fonction principale #
