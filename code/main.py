@@ -111,7 +111,7 @@ def main() -> None:
     number_test = 1
     number_image = 5
     file_MNIST = f"/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/test_image/{dataset}/{number_test}/{number_test}_dataset_{number_image}.png"
-    file_perso = f"MacsOCR/test_image/main1/3.jpg"
+    file_perso = f"MacsOCR/test_image/perso/13.jpeg"
     file = file_perso
 
     database = CreateDb(dataset_train, k, db_csv, taille_grille)
@@ -127,7 +127,7 @@ def main() -> None:
     print("réponse :", file.split("/")[-1][0])
     print("")
 
-    # NormalisationFichier("MacsOCR/01:04:26/Image/MNIST/4/4_dataset_26.png")
+    # NormalisationFichier(file)
 
 
 if __name__ == "__main__":
