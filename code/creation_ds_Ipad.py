@@ -57,6 +57,6 @@ def decouper_grille_vers_dataset(chemin_image_grille: str, dossier_dataset_racin
 
 if __name__ == "__main__":
     decouper_grille_vers_dataset(
-        "MacsOCR/test_image/dataset1.jpg",
-        "MacsOCR/code/dataset_train/ipad_dataset_train",
+        "MacsOCR/test_image/dataset2test.jpg",
+        "MacsOCR/test_image/ipad_dataset",
     )

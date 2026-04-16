@@ -15,6 +15,7 @@ def main():
     win = 0
     k = 7
     taille_grille = 7
+    affichage = True
 
     if os.path.exists(db_csv):
         database = db.charger_journal(db_csv)
@@ -31,6 +32,10 @@ def main():
             if prediction is not None:
                 if int(prediction) == int(i):
                     win += 1
+                else:
+                    if affichage:
+                        print(f"dataset : {dataset} | image : {file.split('/')[-1]} | prediction : {prediction} | réponse : {i}")
+
 
     print("dataset :", dataset)
     print("winrate :", float(win / ((i + 1) * (j + 1))))
