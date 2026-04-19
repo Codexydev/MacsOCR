@@ -105,12 +105,12 @@ def main() -> None:
     k = 7
     taille_grille = 7
     db_csv = "MacsOCR/database.csv"
-    dataset_train = f"MacsOCR/code/dataset_train/{dataset}/"
+    dataset_train = f"MacsOCR/dataset/train/{dataset}/"
 
     number_test = 1
     number_image = 5
-    file_MNIST = f"/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/test_image/{dataset}/{number_test}/{number_test}_dataset_{number_image}.png"
-    file_perso = f"MacsOCR/test_image/perso/13.jpeg"
+    file_dt = f"MacsOCR/dataset/test_image/{dataset}/{number_test}/{number_test}_dataset_{number_image}.png"
+    file_perso = f"MacsOCR/dataset/test_image/perso/1.jpeg"
     file = file_perso
 
     database = CreateDb(dataset_train, k, db_csv, taille_grille)
@@ -134,4 +134,4 @@ if __name__ == "__main__":
     t = time.time()
     main()
     print("\ntemps d'execution :", time.time() - t)
-    # NormalisationFichier("/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/test_image/perso/22.png")
+    # NormalisationFichier("MacsOCR/dataset/test_image/perso/22.png")
