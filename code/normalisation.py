@@ -113,10 +113,10 @@ def cropping(image: Image.Image) -> Image.Image:
                 else:
                     moyenne = 255.0
 
-                if moyenne < 128:  # Si c'est plutôt sombre
-                    pixels_std[x, y] = (0, 0, 0)  # Noir pur
+                if moyenne < 128:
+                    pixels_std[x, y] = (0, 0, 0)
                 else:
-                    pixels_std[x, y] = (255, 255, 255)  # Blanc pur
+                    pixels_std[x, y] = (255, 255, 255)
 
     return image_standardisee
 

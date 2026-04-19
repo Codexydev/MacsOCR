@@ -21,7 +21,7 @@ def main():
         database = db.charger_journal(db_csv)
 
     for i in range(10):
-        for j in range(10):
+        for j in range(len(os.listdir(f'MacsOCR/test_image/{dataset}/{i}'))):
             file = f"MacsOCR/test_image/{dataset}/{i}/{i}_dataset_{j}.png"
 
             mon_image = (list(db.indexFile(file, taille_grille)), file.split("/")[-1])

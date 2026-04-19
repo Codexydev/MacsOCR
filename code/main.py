@@ -83,7 +83,7 @@ def CreateDb(dataset, k, db_csv, taille_grille) -> list[Any]:
     print("")
 
     if os.path.exists(db_csv):
-        # print("\nChargement rapide de la base de données depuis le CSV...")
+        print("\nChargement rapide de la base de données depuis le CSV...")
         database = db.charger_journal(db_csv)
     else:
         print("\nCalcul de la base de données en cours...")
@@ -93,7 +93,6 @@ def CreateDb(dataset, k, db_csv, taille_grille) -> list[Any]:
 
     return database
     # print(f"Nombre d'images dans la base : {len(database)}")
-    # print(ratio(normalisation(file)))
 
 
 #############################
@@ -103,7 +102,7 @@ def CreateDb(dataset, k, db_csv, taille_grille) -> list[Any]:
 
 def main() -> None:
     dataset = "ipad_dataset_train"
-    k = 5
+    k = 7
     taille_grille = 7
     db_csv = "MacsOCR/database.csv"
     dataset_train = f"MacsOCR/code/dataset_train/{dataset}/"
@@ -119,8 +118,9 @@ def main() -> None:
     mon_image = (
         list(db.indexFile(file, taille_grille)),
         file.split("/")[-1],
-    )  # ([list des pixel image], nom de l'image)
+    )
     # print("Données de mon image :",mon_image)
+    
     distances = knn.calcul_distance_total(database, mon_image)
     print("dataset :", dataset)
     print("Prédiction :", knn.find(distances, k, True))
@@ -134,4 +134,4 @@ if __name__ == "__main__":
     t = time.time()
     main()
     print("\ntemps d'execution :", time.time() - t)
-    # testFichier("/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/train_image/perso/test24.png")
+    # NormalisationFichier("/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/test_image/perso/22.png")
