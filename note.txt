@@ -1,0 +1,3 @@
+meilleur dataset ipad : dataset8train (k = 3) -> 89%
+MNIST -> k = 5 -> 94%
+Chars74k -> k = 5 -> 94%

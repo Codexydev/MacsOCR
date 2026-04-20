@@ -79,13 +79,14 @@ def NormalisationFichier(imagePath):
 ############################
 
 
-def CreateDb(dataset, k, db_csv, taille_grille) -> list[Any]:
+def CreateDb(dataset, k, db_csv, taille_grille, recalcul_db) -> list[Any]:
     print("")
 
-    if os.path.exists(db_csv):
+    if os.path.exists(db_csv) and not recalcul_db:
         print("\nChargement rapide de la base de données depuis le CSV...")
         database = db.charger_journal(db_csv)
     else:
+        os.remove(db_csv) if os.path.exists(db_csv) else None
         print("\nCalcul de la base de données en cours...")
         database = db.create_db(dataset, taille_grille)
         db.creer_journal(db_csv, database, taille_grille)
@@ -102,25 +103,30 @@ def CreateDb(dataset, k, db_csv, taille_grille) -> list[Any]:
 
 def main() -> None:
     dataset = "ipad_dataset_train"
-    k = 7
+    k = 3
     taille_grille = 7
     db_csv = "MacsOCR/database.csv"
     dataset_train = f"MacsOCR/dataset/train/{dataset}/"
+    recalcule_db = False
 
     number_test = 1
     number_image = 5
     file_dt = f"MacsOCR/dataset/test_image/{dataset}/{number_test}/{number_test}_dataset_{number_image}.png"
-    file_perso = f"MacsOCR/dataset/test_image/main1/73.jpeg"
+    file_perso = f"MacsOCR/dataset/test_image/perso/73.jpeg"
     file = file_perso
 
-    database = CreateDb(dataset_train, k, db_csv, taille_grille)
+    database = CreateDb(dataset_train, k, db_csv, taille_grille, recalcule_db)
+
+    ##################################
+    # prédiction de notre image test #
+    ##################################
 
     mon_image = (
         list(db.indexFile(file, taille_grille)),
         file.split("/")[-1],
     )
     # print("Données de mon image :",mon_image)
-    
+
     distances = knn.calcul_distance_total(database, mon_image)
     print("dataset :", dataset)
     print("Prédiction :", knn.find(distances, k, True))

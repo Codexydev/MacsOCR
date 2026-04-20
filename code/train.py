@@ -11,17 +11,19 @@ import time
 
 def main():
     db_csv = "MacsOCR/database.csv"
-    dataset = "ipad_dataset"
+    dataset = "ipad_dataset_train"
     win = 0
-    k = 7
+    k = 5
     taille_grille = 7
     affichage = True
+
 
     if os.path.exists(db_csv):
         database = db.charger_journal(db_csv)
 
     for i in range(10):
-        for j in range(len(os.listdir(f'MacsOCR/dataset/test_image/{dataset}/{i}'))):
+        # for j in range(len(os.listdir(f'MacsOCR/dataset/test_image/{dataset}/{i}'))):
+        for j in range(30):
             file = f"MacsOCR/dataset/test_image/{dataset}/{i}/{i}_dataset_{j}.png"
 
             mon_image = (list(db.indexFile(file, taille_grille)), file.split("/")[-1])
