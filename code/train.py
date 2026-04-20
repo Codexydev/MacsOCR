@@ -37,7 +37,7 @@ def main():
                         print(f"dataset : {dataset} | image : {file.split('/')[-1]} | prediction : {prediction} | réponse : {i}")
 
 
-    print("dataset :", dataset)
+    print("\ndataset :", dataset)
     print("winrate :", float(win / ((i + 1) * (j + 1))))
 
 

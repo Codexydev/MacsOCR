@@ -32,7 +32,7 @@ def decouper_grille_vers_dataset(chemin_image_grille: str, dossier_dataset_racin
     for box in valid_boxes:
         x, y, w, h = box
         
-        if abs(y - derniere_y) > 30 and len(ligne_actuelle) > 0:
+        if abs(y - derniere_y) > 25 and len(ligne_actuelle) > 0:
             lignes.append(ligne_actuelle)
             ligne_actuelle = []
             
@@ -77,6 +77,6 @@ def decouper_grille_vers_dataset(chemin_image_grille: str, dossier_dataset_racin
 
 if __name__ == "__main__":
     decouper_grille_vers_dataset(
-        "MacsOCR/test_image/dataset7train.jpg",
-        "MacsOCR/code/dataset_train/ipad_dataset_train",
+        "MacsOCR/dataset/combined/dataset7train.jpg",
+        "MacsOCR/dataset/train/ipad_dataset_train",
     )
