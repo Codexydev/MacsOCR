@@ -110,7 +110,7 @@ def main() -> None:
     number_test = 1
     number_image = 5
     file_dt = f"MacsOCR/dataset/test_image/{dataset}/{number_test}/{number_test}_dataset_{number_image}.png"
-    file_perso = f"MacsOCR/dataset/test_image/perso/1.jpeg"
+    file_perso = f"MacsOCR/dataset/test_image/main1/73.jpeg"
     file = file_perso
 
     database = CreateDb(dataset_train, k, db_csv, taille_grille)
