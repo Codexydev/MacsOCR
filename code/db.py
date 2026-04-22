@@ -12,7 +12,7 @@ from caracterisation import caracterisation
 ############################
 
 
-def indexation(path: str) -> list:
+def indexation(path: str) -> list[str]:
     files = []
 
     for numberFolder in listdir(path):
@@ -24,7 +24,7 @@ def indexation(path: str) -> list:
     return files
 
 
-def indexFile(path: str, taille_grille: int = 4) -> tuple:
+def indexFile(path: str, taille_grille: int = 4) -> tuple[float, ...]:
     image = normalisation(path)
     data = caracterisation(image, taille_grille)
     return data
@@ -35,7 +35,7 @@ def indexFile(path: str, taille_grille: int = 4) -> tuple:
 #######################
 
 
-def create_db(path: str, taille_grille: int):
+def create_db(path: str, taille_grille: int) -> list[tuple[list[float], str]]:
     tab = indexation(path)
     data_base = []
     for fichier in tab:
@@ -45,7 +45,7 @@ def create_db(path: str, taille_grille: int):
     return data_base
 
 
-def creer_journal(path: str, db, taille_grille: int):
+def creer_journal(path: str, db: list[tuple[list[float], str]], taille_grille: int) -> None:
     with open(path, "w", newline="") as csvfile:
         writer = csv.writer(csvfile, delimiter=";")
 
@@ -60,13 +60,12 @@ def creer_journal(path: str, db, taille_grille: int):
             caracteristiques = image[0]
             nom_image = image[1]
 
-            line = list(caracteristiques)
-            line.append(nom_image)
+            line = [str(val) for val in caracteristiques] + [nom_image]
 
             writer.writerow(line)
 
 
-def charger_journal(path: str) -> list:
+def charger_journal(path: str) -> list[tuple[list[float], str]]:
     db = []
 
     with open(path, "r") as csvfile:

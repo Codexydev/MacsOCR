@@ -59,7 +59,7 @@ def zoning_dynamique(image: Image.Image, taille_grille: int) -> list[float]:
     return densites
 
 
-def caracterisation(image: Image.Image, taille_grille: int = 4) -> tuple:
+def caracterisation(image: Image.Image, taille_grille: int = 4) -> tuple[float, ...]:
     x_inter, y_inter = intersect(image)
 
     zones = zoning_dynamique(image, taille_grille)

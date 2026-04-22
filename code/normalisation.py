@@ -44,7 +44,7 @@ def binariasation(imagePath: str) -> list[Any]:
     return pixelArray
 
 
-def regression(img) -> tuple[float, float]:
+def regression(img:list) -> tuple[float, float]:
     x = []
     y = []
 
@@ -121,7 +121,7 @@ def cropping(image: Image.Image) -> Image.Image:
     return image_standardisee
 
 
-def rotateImage(imgMatrix, slope) -> Image.Image:
+def rotateImage(imgMatrix:list, slope:float) -> Image.Image:
     img = np.asarray(imgMatrix, dtype=np.uint8)
     img = Image.fromarray(img)
     imgRotated = img.rotate(slope, expand=True, fillcolor=(255, 255, 255))

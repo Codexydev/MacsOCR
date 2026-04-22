@@ -2,7 +2,7 @@ import os
 from PIL import Image, ImageOps
 
 
-def inverser_dataset():
+def inverser_dataset()  -> None:
     chemin_base = "image_test/MNIST"
 
     for nom_dossier in os.listdir(chemin_base):

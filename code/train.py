@@ -9,9 +9,9 @@ import knn
 import time
 
 
-def main():
+def main()  -> None:
     db_csv = "MacsOCR/database.csv"
-    dataset = "ipad_dataset_train"
+    dataset = "ipad_dataset"
     win = 0
     k = 5
     taille_grille = 7

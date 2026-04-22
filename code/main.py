@@ -1,3 +1,6 @@
+from email.mime import image
+from turtle import listen
+
 from matplotlib.patheffects import Normal
 import numpy as np
 from matplotlib import pyplot as plt
@@ -18,7 +21,7 @@ import knn
 ###################
 
 
-def showImage(matrix, rotatedImage, imageCropped, pente, p) -> None:
+def showImage(matrix: list[Any], rotatedImage: Image.Image, imageCropped: Image.Image, pente: float, p: float) -> None:
     """
     Affiche notre image
     """
@@ -50,7 +53,7 @@ def showImage(matrix, rotatedImage, imageCropped, pente, p) -> None:
 ###############################
 
 
-def NormalisationFichier(imagePath):
+def NormalisationFichier(imagePath:str) -> None:
     ################################
     # normalisation de notre image #
     ################################
@@ -79,7 +82,7 @@ def NormalisationFichier(imagePath):
 ############################
 
 
-def CreateDb(dataset, k, db_csv, taille_grille, recalcul_db) -> list[Any]:
+def CreateDb(dataset: str, k: int, db_csv: str, taille_grille: int, recalcul_db: bool) -> list[tuple[list[float], str]]:
     print("")
 
     if os.path.exists(db_csv) and not recalcul_db:
