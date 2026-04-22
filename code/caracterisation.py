@@ -31,6 +31,7 @@ def intersect(image: Image.Image) -> tuple[int, int]:
 
     return (lx.count(True), ly.count(True))
 
+
 def zoning_dynamique(image: Image.Image, taille_grille: int) -> list[float]:
     """
     Découpe l'image en une grille de (taille_grille x taille_grille).

@@ -21,7 +21,13 @@ import knn
 ###################
 
 
-def showImage(matrix: list[Any], rotatedImage: Image.Image, imageCropped: Image.Image, pente: float, p: float) -> None:
+def showImage(
+    matrix: list[Any],
+    rotatedImage: Image.Image,
+    imageCropped: Image.Image,
+    pente: float,
+    p: float,
+) -> None:
     """
     Affiche notre image
     """
@@ -53,7 +59,7 @@ def showImage(matrix: list[Any], rotatedImage: Image.Image, imageCropped: Image.
 ###############################
 
 
-def NormalisationFichier(imagePath:str) -> None:
+def NormalisationFichier(imagePath: str) -> None:
     ################################
     # normalisation de notre image #
     ################################
@@ -82,7 +88,9 @@ def NormalisationFichier(imagePath:str) -> None:
 ############################
 
 
-def CreateDb(dataset: str, k: int, db_csv: str, taille_grille: int, recalcul_db: bool) -> list[tuple[list[float], str]]:
+def CreateDb(
+    dataset: str, k: int, db_csv: str, taille_grille: int, recalcul_db: bool
+) -> list[tuple[list[float], str]]:
     print("")
 
     if os.path.exists(db_csv) and not recalcul_db:

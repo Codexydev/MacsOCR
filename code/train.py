@@ -9,14 +9,13 @@ import knn
 import time
 
 
-def main()  -> None:
+def main() -> None:
     db_csv = "MacsOCR/database.csv"
     dataset = "ipad_dataset"
     win = 0
     k = 5
     taille_grille = 7
     affichage = True
-
 
     if os.path.exists(db_csv):
         database = db.charger_journal(db_csv)
@@ -36,8 +35,9 @@ def main()  -> None:
                     win += 1
                 else:
                     if affichage:
-                        print(f"dataset : {dataset} | image : {file.split('/')[-1]} | prediction : {prediction} | réponse : {i}")
-
+                        print(
+                            f"dataset : {dataset} | image : {file.split('/')[-1]} | prediction : {prediction} | réponse : {i}"
+                        )
 
     print("\ndataset :", dataset)
     print("winrate :", float(win / ((i + 1) * (j + 1))))

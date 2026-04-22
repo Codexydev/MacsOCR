@@ -45,7 +45,9 @@ def create_db(path: str, taille_grille: int) -> list[tuple[list[float], str]]:
     return data_base
 
 
-def creer_journal(path: str, db: list[tuple[list[float], str]], taille_grille: int) -> None:
+def creer_journal(
+    path: str, db: list[tuple[list[float], str]], taille_grille: int
+) -> None:
     with open(path, "w", newline="") as csvfile:
         writer = csv.writer(csvfile, delimiter=";")
 

@@ -1,7 +1,7 @@
 import os
 
 
-def renommer_dataset()  -> None:
+def renommer_dataset() -> None:
     chemin_base = "MacsOCR/dataset/train/ipad_dataset_train"
 
     for nom_dossier in os.listdir(chemin_base):

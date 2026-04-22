@@ -10,7 +10,9 @@ def calcul_distance(x: tuple[list[float], str], y: tuple[list[float], str]) -> f
     return float(np.linalg.norm(vecteur_x - vecteur_y))
 
 
-def calcul_distance_total(tab: list[tuple[list[float], str]], mon_image: tuple[list[float], str]) -> list[tuple[float, str]]:
+def calcul_distance_total(
+    tab: list[tuple[list[float], str]], mon_image: tuple[list[float], str]
+) -> list[tuple[float, str]]:
     result = []
     for x in tab:
         result.append((calcul_distance(x, mon_image), x[1]))
