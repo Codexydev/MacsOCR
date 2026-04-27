@@ -4,6 +4,16 @@ import numpy as np
 
 
 def decouper_grille_vers_dataset(chemin_image_grille: str, dossier_dataset_racine: str) -> None:
+    """
+    Automatise l'extraction de caractères individuels depuis une grille manuscrite globale.
+    
+    Détecte les contours de chaque chiffre à l'aide d'OpenCV, les trie spatialement 
+    (lignes puis colonnes) et sauvegarde chaque caractère recadré dans le dossier correspondant à sa classe.
+
+    Args:
+        chemin_image_grille (str): Le chemin de la capture d'écran contenant la grille de chiffres.
+        dossier_dataset_racine (str): Le dossier de destination où créer les sous-dossiers (0 à 9).
+    """
     image = cv2.imread(chemin_image_grille, cv2.IMREAD_GRAYSCALE)
     if image is None:
         print("Erreur : Impossible de charger l'image.")
