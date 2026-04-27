@@ -9,6 +9,19 @@ from normalisation import cropping
 
 
 def intersect(image: Image.Image) -> tuple[int, int]:
+    """
+    Analyse les intersections du chiffre via ses axes médians.
+    
+    L'algorithme trace un axe horizontal et un axe vertical au centre de l'image 
+    et compte le nombre de transitions (fond blanc vers encre noire).
+
+    Args:
+        image (Image.Image): L'image normalisée de 28x28 pixels.
+
+    Returns:
+        tuple[int, int]: Le nombre d'intersections sur l'axe X (horizontal) 
+                         et sur l'axe Y (vertical).
+    """
     middle_x = image.size[0] / 2
     middle_y = image.size[1] / 2
 
@@ -34,8 +47,17 @@ def intersect(image: Image.Image) -> tuple[int, int]:
 
 def zoning_dynamique(image: Image.Image, taille_grille: int) -> list[float]:
     """
-    Découpe l'image en une grille de (taille_grille x taille_grille).
-    Gère automatiquement les divisions imparfaites sans perdre de pixels.
+    Extrait la densité spatiale de l'encre (Zoning) selon une grille définie.
+    
+    Découpe l'image en blocs (ex: 7x7) et calcule pour chaque bloc la proportion 
+    d'encre relative par rapport à la quantité totale d'encre du caractère.
+
+    Args:
+        image (Image.Image): L'image normalisée de 28x28 pixels.
+        taille_grille (int): Le nombre de subdivisions par côté (ex: 7 pour une grille de 49 zones).
+
+    Returns:
+        list[float]: Une liste contenant les densités relatives de chaque bloc (valeurs entre 0 et 1).
     """
     matrice = np.array(image)
 
@@ -61,6 +83,20 @@ def zoning_dynamique(image: Image.Image, taille_grille: int) -> list[float]:
 
 
 def caracterisation(image: Image.Image, taille_grille: int = 4) -> tuple[float, ...]:
+    """
+    Génère le vecteur de caractéristiques mathématiques complet du chiffre.
+    
+    Concatène les densités du zoning, les intersections normalisées et le ratio 
+    de forme (largeur/hauteur) pour créer une signature numérique.
+
+    Args:
+        image (Image.Image): L'image normalisée à analyser.
+        taille_grille (int, optional): La dimension du zoning. Par défaut à 4.
+
+    Returns:
+        tuple[float, ...]: Le vecteur multidimensionnel représentant l'image 
+                           (généralement de dimension 52 pour une grille 7x7).
+    """
     x_inter, y_inter = intersect(image)
 
     zones = zoning_dynamique(image, taille_grille)
