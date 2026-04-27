@@ -29,7 +29,7 @@ La décision finale est prise par l'algorithme des $K$-Plus-Proches-Voisins :
 
 ## Structure du Projet
 ```text
-MacsOCR/
+MacsOCR/code/
 ├── main.py                 # Point d'entrée principal et outils de visualisation
 ├── train.py                # Script d'évaluation des performances (Win Rate)
 ├── normalisation.py        # Algorithmes de traitement d'image et régression
