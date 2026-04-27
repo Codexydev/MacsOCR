@@ -25,7 +25,17 @@ def showImage(
     p: float,
 ) -> None:
     """
-    Affiche notre image
+    Affiche une interface visuelle des différentes étapes de normalisation.
+    
+    Utilise Matplotlib pour tracer la matrice binarisée avec sa droite de régression, 
+    l'image redressée par rotation, et le résultat final après le cropping.
+
+    Args:
+        matrix (list[Any]): La matrice binarisée de l'image source.
+        rotatedImage (Image.Image): L'image après rotation isométrique.
+        imageCropped (Image.Image): L'image finale normalisée.
+        pente (float): Le coefficient directeur de la droite de régression.
+        p (float): L'ordonnée à l'origine de la droite de régression.
     """
     figure = plt.figure()
 
@@ -56,6 +66,12 @@ def showImage(
 
 
 def NormalisationFichier(imagePath: str) -> None:
+    """
+    Script de test pour visualiser l'impact de la normalisation sur une image.
+
+    Args:
+        imagePath (str): Le chemin de l'image mystère à analyser.
+    """
     ################################
     # normalisation de notre image #
     ################################
@@ -87,6 +103,22 @@ def NormalisationFichier(imagePath: str) -> None:
 def CreateDb(
     dataset: str, k: int, db_csv: str, taille_grille: int, recalcul_db: bool
 ) -> list[tuple[list[float], str]]:
+    """
+    Gère l'initialisation de la mémoire (base de données) pour le modèle K-NN.
+    
+    Charge le fichier CSV existant pour une exécution quasi-instantanée, ou force 
+    le recalcule complet de l'ensemble des caractéristiques si demandé.
+
+    Args:
+        dataset (str): Le dossier contenant les images d'entraînement.
+        k (int): Le paramètre K-NN (bien qu'inutilisé ici, laissé pour cohérence de configuration).
+        db_csv (str): Le chemin du fichier CSV de sauvegarde.
+        taille_grille (int): La configuration du zoning.
+        recalcul_db (bool): Si True, écrase le CSV existant et re-génère tous les vecteurs.
+
+    Returns:
+        list[tuple[list[float], str]]: La base de données chargée en mémoire RAM.
+    """
     print("")
 
     if os.path.exists(db_csv) and not recalcul_db:
