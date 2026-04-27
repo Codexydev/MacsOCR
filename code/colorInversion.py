@@ -3,6 +3,12 @@ from PIL import Image, ImageOps
 
 
 def inverser_dataset() -> None:
+    """
+    Parcourt un dataset et inverse la colorimétrie de toutes les images.
+    
+    Transforme les tracés blancs sur fond noir (format MNIST) en tracés 
+    noirs sur fond blanc, garantissant la compatibilité avec le système de binarisation.
+    """
     chemin_base = "image_test/MNIST"
 
     for nom_dossier in os.listdir(chemin_base):

@@ -2,6 +2,12 @@ import os
 
 
 def renommer_dataset() -> None:
+    """
+    Parcourt l'ensemble d'un dataset pour uniformiser la nomenclature des fichiers.
+    
+    Assure que chaque image adopte la convention : 'label_dataset_index.png', 
+    essentielle pour l'extraction automatique des étiquettes lors de l'apprentissage.
+    """
     chemin_base = "MacsOCR/dataset/train/ipad_dataset_train"
 
     for nom_dossier in os.listdir(chemin_base):
