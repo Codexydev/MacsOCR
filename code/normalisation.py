@@ -11,9 +11,17 @@ from skimage import morphology
 
 def binariasation(imagePath: str) -> list[Any]:
     """
-    Permet de binariser une image donc le chemin est passé en paramètre
-    pixel noir si la moyenne de ces couleur (RVB) < 128 et blanc sinon.
-    Retourne une matrice (listes python)
+    Convertit une image brute en une matrice binaire (Noir et Blanc).
+    
+    Chaque pixel est évalué selon sa luminance moyenne (RVB). S'il est 
+    inférieur au seuil de 128, il devient noir (encre), sinon blanc (fond).
+
+    Args:
+        imagePath (str): Le chemin absolu ou relatif vers l'image source.
+
+    Returns:
+        list[Any]: Une matrice (liste de listes) contenant les tuples (R, V, B) 
+                   binarisés de chaque pixel.
     """
     img = Image.open(imagePath)
     pixelArray = []
@@ -45,6 +53,19 @@ def binariasation(imagePath: str) -> list[Any]:
 
 
 def regression(img: list) -> tuple[float, float]:
+    """
+    Calcule la droite de régression linéaire de l'encre présente sur l'image.
+    
+    Cette fonction repère les pixels noirs et applique la méthode des moindres carrés 
+    pour déterminer l'axe vertical moyen du tracé.
+
+    Args:
+        img (list): La matrice de pixels représentant l'image binarisée.
+
+    Returns:
+        tuple[float, float]: Un tuple contenant le coefficient directeur (la pente) 
+                             et l'ordonnée à l'origine de la droite.
+    """
     x = []
     y = []
 
@@ -66,8 +87,37 @@ def regression(img: list) -> tuple[float, float]:
 
     return pente, float(p)
 
+def rotateImage(imgMatrix: list, slope: float) -> Image.Image:
+    """
+    Applique une rotation à la matrice de pixels pour redresser le caractère.
+
+    Args:
+        imgMatrix (list): La matrice binaire de l'image d'origine.
+        slope (float): L'angle de rotation (en degrés) à appliquer.
+
+    Returns:
+        Image.Image: L'objet image redressé, avec un remplissage blanc pour les marges créées.
+    """
+    img = np.asarray(imgMatrix, dtype=np.uint8)
+    img = Image.fromarray(img)
+    imgRotated = img.rotate(slope, expand=True, fillcolor=(255, 255, 255))
+
+    return imgRotated
 
 def cropping(image: Image.Image) -> Image.Image:
+    """
+    Recadre et redimensionne une image pour l'adapter à un format standard.
+    
+    L'algorithme coupe les marges blanches inutiles (bounding box), puis 
+    redimensionne le tracé de manière proportionnelle avec un filtre de Lanczos 
+    pour l'insérer au centre d'une matrice stricte de 28x28 pixels.
+
+    Args:
+        image (Image.Image): L'objet image redressé à recadrer.
+
+    Returns:
+        Image.Image: La nouvelle image normalisée au format 28x28 pixels et re-binarisée.
+    """
     pixels = image.load()
 
     Xmin = image.size[0]
@@ -121,20 +171,24 @@ def cropping(image: Image.Image) -> Image.Image:
     return image_standardisee
 
 
-def rotateImage(imgMatrix: list, slope: float) -> Image.Image:
-    img = np.asarray(imgMatrix, dtype=np.uint8)
-    img = Image.fromarray(img)
-    imgRotated = img.rotate(slope, expand=True, fillcolor=(255, 255, 255))
-
-    return imgRotated
-
-
 #######################
 # Fonction principale #
 #######################
 
 
 def normalisation(path: str) -> Image.Image:
+    """
+    Exécute le pipeline complet de normalisation sur une image.
+    
+    Enchaîne la binarisation, le calcul de régression, le redressement par rotation 
+    et enfin le recadrage à 28x28 pixels.
+
+    Args:
+        path (str): Le chemin du fichier image à traiter.
+
+    Returns:
+        Image.Image: L'image finale normalisée et prête pour l'extraction de caractéristiques.
+    """
     binaryImage = binariasation(path)
     pente, p = regression(binaryImage)
 
