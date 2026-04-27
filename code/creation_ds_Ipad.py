@@ -3,9 +3,7 @@ import os
 import numpy as np
 
 
-def decouper_grille_vers_dataset(
-    chemin_image_grille: str, dossier_dataset_racine: str
-) -> None:
+def decouper_grille_vers_dataset(chemin_image_grille: str, dossier_dataset_racine: str) -> None:
     image = cv2.imread(chemin_image_grille, cv2.IMREAD_GRAYSCALE)
     if image is None:
         print("Erreur : Impossible de charger l'image.")

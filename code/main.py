@@ -1,7 +1,3 @@
-from email.mime import image
-from turtle import listen
-
-from matplotlib.patheffects import Normal
 import numpy as np
 from matplotlib import pyplot as plt
 import math
