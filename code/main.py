@@ -17,6 +17,7 @@ import knn
 ###################
 
 
+
 def showImage(
     matrix: list[Any],
     rotatedImage: Image.Image,
@@ -25,38 +26,42 @@ def showImage(
     p: float,
 ) -> None:
     """
-    Affiche une interface visuelle des différentes étapes de normalisation.
-    
-    Utilise Matplotlib pour tracer la matrice binarisée avec sa droite de régression, 
-    l'image redressée par rotation, et le résultat final après le cropping.
-
-    Args:
-        matrix (list[Any]): La matrice binarisée de l'image source.
-        rotatedImage (Image.Image): L'image après rotation isométrique.
-        imageCropped (Image.Image): L'image finale normalisée.
-        pente (float): Le coefficient directeur de la droite de régression.
-        p (float): L'ordonnée à l'origine de la droite de régression.
+    Affiche une interface visuelle des différentes étapes de normalisation
+    avec une superposition de la grille 7x7 pour illustrer le zoning.
     """
-    figure = plt.figure()
+    figure = plt.figure(figsize=(12, 4))
 
+    # --- Image 1 : Origine + Régression ---
     im1 = figure.add_subplot(1, 3, 1)
     im1.imshow(matrix, interpolation="nearest")
-
     hauteur = len(matrix)
     y_vals = np.linspace(0, hauteur - 1, 100)
     x_vals = pente * y_vals + p
-
     im1.plot(x_vals, y_vals, "-r")
-    im1.set_title("Image d'origine + Régression")
+    im1.set_title("1. Origine + Régression")
 
+    # --- Image 2 : Redressement ---
     im2 = figure.add_subplot(1, 3, 2)
     im2.imshow(rotatedImage, interpolation="nearest")
-    im2.set_title("Image redressée")
+    im2.set_title("2. Image redressée")
 
+    # --- Image 3 : Cropping + Grille de Zoning ---
     im3 = figure.add_subplot(1, 3, 3)
     im3.imshow(imageCropped, interpolation="nearest")
-    im3.set_title("Image cropped")
+    
+    # Ajout de la grille 7x7 (une ligne tous les 4 pixels pour une image de 28x28)
+    taille = 28
+    pas = taille / 7  # soit 4
+    
+    for i in range(1, 7):
+        # Lignes verticales
+        im3.axvline(x=i * pas - 0.5, color='red', linestyle='--', linewidth=1, alpha=0.7)
+        # Lignes horizontales
+        im3.axhline(y=i * pas - 0.5, color='red', linestyle='--', linewidth=1, alpha=0.7)
+        
+    im3.set_title("3. Normalisation + Zoning (7x7)")
 
+    plt.tight_layout()
     plt.show()
 
 
@@ -76,7 +81,7 @@ def NormalisationFichier(imagePath: str) -> None:
     # normalisation de notre image #
     ################################
 
-    binaryImage = binariasation(imagePath)
+    binaryImage = binarisation(imagePath)
     pente, p = regression(binaryImage)
 
     angle_rad = math.atan(pente)
@@ -151,7 +156,7 @@ def main() -> None:
     number_test = 1
     number_image = 5
     file_dt = f"MacsOCR/dataset/test_image/{dataset}/{number_test}/{number_test}_dataset_{number_image}.png"
-    file_perso = f"MacsOCR/dataset/test_image/perso/73.jpeg"
+    file_perso = f"/Users/antoine/Documents/etude/l2/s4/MaCs/projet/MacsOCR/dataset/test_image/ipad_dataset/4/4_dataset_3.png"
     file = file_perso
 
     database = CreateDb(dataset_train, k, db_csv, taille_grille, recalcule_db)
@@ -174,9 +179,16 @@ def main() -> None:
 
     # NormalisationFichier(file)
 
+    binaryImage = binarisation(file)
+    figure = plt.figure()
+    im1 = figure.add_subplot(1, 3, 1)
+    im1.imshow(binaryImage, interpolation="nearest")
+    plt.tight_layout()
+    plt.show()
+    
+
 
 if __name__ == "__main__":
     t = time.time()
     main()
     print("\ntemps d'execution :", time.time() - t)
-    # NormalisationFichier("MacsOCR/dataset/test_image/perso/22.png")

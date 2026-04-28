@@ -2,14 +2,13 @@ from PIL import Image
 import numpy as np
 import math
 from typing import Any
-from skimage import morphology
 
 #######################
 # Normalisation image #
 #######################
 
 
-def binariasation(imagePath: str) -> list[Any]:
+def binarisation(imagePath: str) -> list[Any]:
     """
     Convertit une image brute en une matrice binaire (Noir et Blanc).
     
@@ -189,7 +188,7 @@ def normalisation(path: str) -> Image.Image:
     Returns:
         Image.Image: L'image finale normalisée et prête pour l'extraction de caractéristiques.
     """
-    binaryImage = binariasation(path)
+    binaryImage = binarisation(path)
     pente, p = regression(binaryImage)
 
     angle_rad = math.atan(pente)

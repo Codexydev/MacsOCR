@@ -1,8 +1,6 @@
 from PIL import Image
 import numpy as np
 
-from normalisation import cropping
-
 ##################################
 # Caractérisation de notre image #
 ##################################
@@ -11,7 +9,7 @@ from normalisation import cropping
 def intersect(image: Image.Image) -> tuple[int, int]:
     """
     Analyse les intersections du chiffre via ses axes médians.
-    
+
     L'algorithme trace un axe horizontal et un axe vertical au centre de l'image 
     et compte le nombre de transitions (fond blanc vers encre noire).
 
@@ -48,7 +46,7 @@ def intersect(image: Image.Image) -> tuple[int, int]:
 def zoning_dynamique(image: Image.Image, taille_grille: int) -> list[float]:
     """
     Extrait la densité spatiale de l'encre (Zoning) selon une grille définie.
-    
+
     Découpe l'image en blocs (ex: 7x7) et calcule pour chaque bloc la proportion 
     d'encre relative par rapport à la quantité totale d'encre du caractère.
 
@@ -85,7 +83,7 @@ def zoning_dynamique(image: Image.Image, taille_grille: int) -> list[float]:
 def caracterisation(image: Image.Image, taille_grille: int = 4) -> tuple[float, ...]:
     """
     Génère le vecteur de caractéristiques mathématiques complet du chiffre.
-    
+
     Concatène les densités du zoning, les intersections normalisées et le ratio 
     de forme (largeur/hauteur) pour créer une signature numérique.
 

@@ -1,7 +1,4 @@
-import math
-from sre_constants import ANY
 import numpy as np
-from typing import Any
 
 
 def calcul_distance(x: tuple[list[float], str], y: tuple[list[float], str]) -> float:

@@ -1,5 +1,4 @@
 from os import listdir
-from typing import Any
 import csv
 
 # import perso
@@ -92,7 +91,6 @@ def creer_journal(
     with open(path, "w", newline="") as csvfile:
         writer = csv.writer(csvfile, delimiter=";")
 
-        # S'il y a une grille 7x7, ça créera automatiquement 49 colonnes "zone_X"
         nb_zones = taille_grille * taille_grille
         colonnes_zones = [f"zone_{i}" for i in range(nb_zones)]
 
@@ -135,17 +133,3 @@ def charger_journal(path: str) -> list[tuple[list[float], str]]:
             db.append((caracteristiques_float, nom_image))
 
     return db
-
-
-##################################
-# main #
-##################################
-
-
-def main():
-    ...
-    # print(create_db("MacsOCR/01:04:26/Image/imageDepart"))
-
-
-if __name__ == "__main__":
-    main()

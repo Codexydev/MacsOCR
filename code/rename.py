@@ -18,8 +18,6 @@ def renommer_dataset() -> None:
 
             for index, nom_fichier in enumerate(fichiers):
                 if nom_fichier.endswith((".png", ".jpg", ".jpeg", ".JPG")):
-                    # if nom_fichier.startswith(nom_dossier):
-                    #     continue
 
                     ancien_chemin = os.path.join(chemin_dossier, nom_fichier)
 

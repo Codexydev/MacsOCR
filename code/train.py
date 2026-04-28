@@ -1,9 +1,4 @@
-from typing import Any
-
 import os
-
-from normalisation import *
-from caracterisation import *
 import db
 import knn
 import time
@@ -13,7 +8,7 @@ def main() -> None:
     db_csv = "MacsOCR/database.csv"
     dataset = "ipad_dataset"
     win = 0
-    k = 5
+    k = 3
     taille_grille = 7
     affichage = True
 
@@ -21,7 +16,6 @@ def main() -> None:
         database = db.charger_journal(db_csv)
 
     for i in range(10):
-        # for j in range(len(os.listdir(f'MacsOCR/dataset/test_image/{dataset}/{i}'))):
         for j in range(30):
             file = f"MacsOCR/dataset/test_image/{dataset}/{i}/{i}_dataset_{j}.png"
 
